@@ -4,6 +4,7 @@ Created on Mar 14, 2015
 @author: Venkatesh
 '''
 from piece.piece import Piece
+from piece.image import get_image
 
 class Bishop(Piece):
     '''
@@ -15,7 +16,10 @@ class Bishop(Piece):
         self.color = color
         self.location = location
         
-        self.image = None           #have to be updated with the corresponding image
+        if(color == "white"):
+            self.image = get_image("wB")
+        else:
+            self.image = get_image("bB")
         
     def is_possible(self, location):
         Piece.is_possible(self, location)
