@@ -22,8 +22,22 @@ class Knight(Piece):
         else:
             self.image = get_image("bN")
         
-    def is_possible(self, location):
+    def is_possible(self, location,board):
         Piece.is_possible(self, location)
+	
+	xDiff = self.location[0] - location[0]
+        yDiff = self.location[1] - location[1]
+	
+	if(self.color == "white"):
+                colour = 1
+        else:
+                colour = -1	
+
+
+	if( ( abs(xDiff) == 1 and abs(yDiff) == 2 ) or ( abs(xDiff) == 2 and abs(yDiff) == 1 ) ):
+		return True
+
+	return False
         
     def get_all_moves(self):
         Piece.get_all_moves(self)

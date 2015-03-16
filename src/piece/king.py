@@ -22,9 +22,38 @@ class King(Piece):
         else:
             self.image = get_image("bK")
         
-    def is_possible(self, location):
+    def is_possible(self, location,board):
         Piece.is_possible(self, location)
+	
+	xDiff = self.location[0] - location[0]
+	yDiff = self.location[1] - location[1]
+
+	if(self.color == "white"):
+                colour = 1
+        else:
+                colour = -1
+
+
+	if((xDiff == -1 or xDiff == 1 or xDiff == 0) and (yDiff == -1 or yDiff == 1 or yDiff == 0)):
+		if(not(xDiff == 0 and yDiff == 0 )):
+			if(board[location[0]][location[1]] != colour):
+				return True
+	return False
         
     def get_all_moves(self):
         Piece.get_all_moves(self)
-        
+        newLocation=[]
+	if(self.color == "white"):
+                colour = 1
+        else:
+                colour = -1
+
+	for i in range(-1,2):
+		for j in range(-1,2):
+			if(not(i==0 and j==0) ):
+				if(self.location[0]+i >=0 and self.location[0]+i <=7 and \
+						 self.location[1]+j >=0 and self.location[1]+j <=7):
+					if(board[location[0]][location[1]] != colour):
+						newLocation.append[self.location[0]+i,self.location[1]+j]			
+
+	return newLocation
