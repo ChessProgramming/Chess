@@ -22,8 +22,9 @@ class Knight(Piece):
         else:
             self.image = get_image("bN")
         
-    def is_possible(self, location,board):
-        Piece.is_possible(self, location)
+    def is_possible(self, location, board):
+      
+	Piece.is_possible(self, location, board)
 	
 	xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
@@ -33,8 +34,7 @@ class Knight(Piece):
         else:
                 colour = -1	
 
-
-	if( ( abs(xDiff) == 1 and abs(yDiff) == 2 ) or ( abs(xDiff) == 2 and abs(yDiff) == 1 ) ):
+	if( ( abs(xDiff) == 1 and abs(yDiff) == 2 ) or ( abs(xDiff) == 2 and abs(yDiff) == 1 ) ): #check wh
 		return True
 
 	return False
