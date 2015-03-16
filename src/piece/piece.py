@@ -17,17 +17,22 @@ class Piece(abc):
     __metaclass__ = ABCMeta
     
     @abstractmethod
-    def is_possible(self, location):
+    def is_possible(self, location, board):
         '''
-            location will have the new location and this method returns
+            location will have the new location
+            board is a 2d array with -1 as black piece 
+            0 as empty space and 1 as white piece
+            and this method returns
             true if it is a legal move
             false if it is an illegal move
         '''
         pass
     
     @abstractmethod
-    def get_all_moves(self):
+    def get_all_moves(self, board):
         '''
+            board is a 2d array with -1 as black piece 
+            0 as empty space and 1 as white piece
             returns a list of all possible locations
         '''
         pass
