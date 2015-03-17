@@ -5,8 +5,6 @@ Created on Mar 14, 2015
 '''
 
 from tkinter import *  # @UnusedWildImport
-from piece.rook import Rook
-from piece.queen import Queen
 
 class Cell(Frame):
     '''
@@ -22,33 +20,17 @@ class Cell(Frame):
         self.button.pack(side="top")
 
     def config(self, **kwargs):
-        self.piece = kwargs['piece']
         self.location = kwargs['location']
         self.color = kwargs['color']
         
-        self.button.config(image = self.piece.getimage())
-        
         if(self.color == "white"):
-            self.button.config(bg = "#FFD39B")
+            self.button.config(bg = "#D3B770")      #FFD39B
         else:
-            self.button.config(bg = "#8B4513")
+            self.button.config(bg = "#8C481C")      #8B4513
             
+    def setPiece(self, piece = None):
+        self.piece = piece
+        if(self.piece != None):
+            self.button.config(image = self.piece.getimage())
             
-if __name__ == "__main__":
-    root = Tk()
-    flag = True
-    
-    for i in range(8):
-        for j in range(8):
-            if(flag == True):
-                b = Cell(root)
-                b.config(piece = Rook("white", [i , j]), location = [i , j], color = "white")
-                b.grid(row=i, column=j)
-            else:
-                b = Cell(root)
-                b.config(piece = Queen("white", [i , j]), location = [i , j], color = "black")
-                b.grid(row=i, column=j)
-            flag = not flag
-        flag = not flag
-    root.mainloop()
     

@@ -4,10 +4,10 @@ Created on Mar 14, 2015
 @author: Venkatesh
 '''
 
-from piece import *
+from piece import *  # @UnusedWildImport
 from tkinter import PhotoImage
 
-class King(Piece):
+class King():
     '''
         King is a piece and it can hop to all its adjacent locations
     '''

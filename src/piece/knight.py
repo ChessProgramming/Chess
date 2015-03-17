@@ -3,10 +3,10 @@ Created on Mar 14, 2015
 
 @author: Venkatesh
 '''
-from piece import *
+from piece import *  # @UnusedWildImport
 from tkinter import PhotoImage
 
-class Knight(Piece):
+class Knight():
     '''
         Knight is a piece which can move in L direction
     '''

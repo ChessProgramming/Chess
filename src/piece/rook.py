@@ -3,10 +3,10 @@ Created on Mar 14, 2015
 
 @author: Venkatesh
 '''
-from piece import *
+from piece import *  # @UnusedWildImport
 from tkinter import PhotoImage
 
-class Rook(Piece):
+class Rook():
     '''
         Rook is a piece it can move horizontally and vertically
     '''

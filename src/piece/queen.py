@@ -7,7 +7,7 @@ from piece import *
 from tkinter import PhotoImage
 
 
-class Queen(Piece):
+class Queen():
     '''
         Queen is a piece and it can move in all the directions
     '''
