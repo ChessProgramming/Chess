@@ -3,8 +3,9 @@ Created on Mar 14, 2015
 
 @author: Venkatesh
 '''
-from piece.piece import Piece
-from piece.image import get_image
+from piece import *
+from tkinter import PhotoImage
+
 
 class Bishop(Piece):
     '''
@@ -16,14 +17,12 @@ class Bishop(Piece):
         self.location = location
         
         if(color == "white"):
-            self.image = get_image("wB")
+            self.image = PhotoImage(file = "../../img/wB.png")
         else:
-            self.image = get_image("bB")
+            self.image = PhotoImage(file = "../../img/bB.png")
 
     
-    def is_possible(self, location, board):        
-        Piece.is_possible(self, location, board)
-    
+    def is_possible(self, location, board):
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
 
@@ -62,7 +61,6 @@ class Bishop(Piece):
         return True
 
     def get_all_moves(self, board):
-        Piece.get_all_moves(self, board)
         newLocation=[]
         x=self.loaction[0]
         y=self.location[1]

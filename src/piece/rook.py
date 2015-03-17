@@ -3,9 +3,8 @@ Created on Mar 14, 2015
 
 @author: Venkatesh
 '''
-from piece.image import get_image
-from piece.piece import Piece
-
+from piece import *
+from tkinter import PhotoImage
 
 class Rook(Piece):
     '''
@@ -17,13 +16,11 @@ class Rook(Piece):
         self.location = location
         
         if(color == "white"):
-            self.image = get_image("wR")
+            self.image = PhotoImage(file = "../../img/wR.png")
         else:
-            self.image = get_image("bR")
+            self.image = PhotoImage(file = "../../img/bR.png")
             
     def is_possible(self, location, board):
-
-        Piece.is_possible(self, location, board)
 
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
@@ -72,8 +69,6 @@ class Rook(Piece):
         return True
    
     def get_all_moves(self, board):
-        Piece.get_all_moves(self, board)
-
         newLocation=[]
         x = self.location[0]
         y = self.location[1]

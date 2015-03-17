@@ -3,9 +3,9 @@ Created on Mar 14, 2015
 
 @author: Venkatesh
 '''
-from piece.image import get_image
-from piece.piece import Piece
 
+from piece import *
+from tkinter import PhotoImage
 
 class King(Piece):
     '''
@@ -18,12 +18,11 @@ class King(Piece):
         self.location = location
 
         if(color == "white"):
-            self.image = get_image("wK")
+            self.image = PhotoImage(file = "../../img/wK.png")
         else:
-            self.image = get_image("bK")
+            self.image = PhotoImage(file = "../../img/bK.png")
         
     def is_possible(self, location, board):
-        Piece.is_possible(self, location, board)
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
 
@@ -40,7 +39,6 @@ class King(Piece):
         return False
  
     def get_all_moves(self, board):
-        Piece.get_all_moves(self, board)
         newLocation=[]
         
         if(self.color == "white"):

@@ -3,9 +3,8 @@ Created on Mar 14, 2015
 
 @author: Venkatesh
 '''
-
-from piece.image import get_image
-from piece.piece import Piece
+from piece import *
+from tkinter import PhotoImage
 
 
 class Queen(Piece):
@@ -19,13 +18,12 @@ class Queen(Piece):
         self.location = location
         
         if(color == "white"):
-            self.image = get_image("wQ")
+            self.image = PhotoImage(file = "../../img/wQ.png")
         else:
-            self.image = get_image("bQ")
+            self.image = PhotoImage(file = "../../img/bQ.png")
         
 
     def is_possible(self, location,board):
-        Piece.is_possible(self, location)
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
         if(self.color == "white"):
@@ -99,7 +97,6 @@ class Queen(Piece):
         return True
     
     def get_all_moves(self,board):
-        Piece.get_all_moves(self)
         newLocation=[]
         x=self.loaction[0]
         y=self.location[1]

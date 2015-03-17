@@ -3,8 +3,9 @@ Created on Mar 14, 2015
 
 @author: Venkatesh
 '''
-from piece.image import get_image
-from piece.piece import Piece
+
+from piece import *
+from tkinter import PhotoImage
 
 
 class Pawn(Piece):
@@ -19,13 +20,11 @@ class Pawn(Piece):
         self.move = move   # +1 when it moves forward & -1 backward
         
         if(color == "white"):
-            self.image = get_image("wP")
+            self.image = PhotoImage(file = "../../img/wP.png")
         else:
-            self.image = get_image("bP")
+            self.image = PhotoImage(file = "../../img/bP.png")
         
     def is_possible(self, location, board):
-        Piece.is_possible(self, location, board)
-        
         if(self.color == "white"):
             colour = 1
         else:
@@ -56,7 +55,6 @@ class Pawn(Piece):
         return False
      
     def get_all_moves(self, board ):
-        Piece.get_all_moves(self, board)
         newLocation = []
         
         if(self.color == "white"):
