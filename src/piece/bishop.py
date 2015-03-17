@@ -4,7 +4,7 @@ Created on Mar 14, 2015
 @author: Venkatesh
 '''
 from piece import *
-from tkinter import PhotoImage
+from tkinter import PhotoImage, Tk
 
 
 class Bishop(Piece):
@@ -62,7 +62,7 @@ class Bishop(Piece):
 
     def get_all_moves(self, board):
         newLocation=[]
-        x=self.loaction[0]
+        x=self.location[0]
         y=self.location[1]
     
         if(self.color == "white"):
@@ -83,7 +83,7 @@ class Bishop(Piece):
                 newLocation.append([x,y])
                 break         
 
-        x=self.loaction[0]
+        x=self.location[0]
         y=self.location[1]
 
         #checks for the moves in bottom left diagonal
@@ -99,7 +99,7 @@ class Bishop(Piece):
                 newLocation.append([x,y])
                 break 
 
-        x=self.loaction[0]
+        x=self.location[0]
         y=self.location[1]
 
         #checks for the moves in bottom right diagonal 
@@ -115,7 +115,7 @@ class Bishop(Piece):
                 newLocation.append([x,y])
                 break 
 
-        x=self.loaction[0]
+        x=self.location[0]
         y=self.location[1]
 
         #checks for the moves in top left diagonal
@@ -141,3 +141,6 @@ class Bishop(Piece):
     
     def setlocation(self, location):
         self.location = location
+        
+
+

@@ -5,7 +5,7 @@ Created on Mar 14, 2015
 '''
 
 from piece import *
-from tkinter import PhotoImage
+from tkinter import PhotoImage, Tk
 
 
 class Pawn(Piece):
@@ -45,7 +45,7 @@ class Pawn(Piece):
                 return True
         
         if(xDiff == 1 and yDiff == 0): #for single forward move
-            if(board[self.location[0] + self.move ][self.location[1] == 0]):#checks for obstacle
+            if(board[self.location[0] + self.move ][self.location[1]] == 0):#checks for obstacle
                 return True
             
         if(xDiff==1 and (yDiff==-1 or yDiff ==1)):  #for taking opponent piece 
@@ -83,10 +83,7 @@ class Pawn(Piece):
                 
         return newLocation
                 
-            
-            
-                
-            
+              
         
     def getimage(self):
         return self.image
@@ -94,3 +91,4 @@ class Pawn(Piece):
     
     def setlocation(self, location):
         self.location = location
+        

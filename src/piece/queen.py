@@ -98,7 +98,7 @@ class Queen(Piece):
     
     def get_all_moves(self,board):
         newLocation=[]
-        x=self.loaction[0]
+        x=self.location[0]
         y=self.location[1]
 
         if(self.color == "white"):
@@ -120,7 +120,7 @@ class Queen(Piece):
                 newLocation.append([x,y])
                 break         
 
-        x=self.loaction[0]
+        x=self.location[0]
         y=self.location[1]
 
         #checks for the moves in bottom left diagonal
@@ -136,7 +136,7 @@ class Queen(Piece):
                 newLocation.append([x,y])
                 break 
 
-        x=self.loaction[0]
+        x=self.location[0]
         y=self.location[1]
 
         #checks for the moves in bottom right diagonal 
@@ -152,7 +152,7 @@ class Queen(Piece):
                 newLocation.append([x,y])
                 break 
 
-        x=self.loaction[0]
+        x=self.location[0]
         y=self.location[1]
 
         #checks for the moves in top left diagonal
