@@ -37,3 +37,13 @@ class Piece(abc):
         '''
         pass
         
+    @abstractmethod
+    def getimage(self):
+        '''
+            returns the PhotoImage object of the current piece 
+        '''
+        pass
+    
+    @abstractmethod
+    def setlocation(self, location):
+        pass

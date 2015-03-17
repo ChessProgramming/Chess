@@ -58,3 +58,10 @@ class King(Piece):
                             newLocation.append[self.location[0]+i,self.location[1]+j]            
 
         return newLocation
+
+    def getimage(self):
+        return self.image
+    
+    
+    def setlocation(self, location):
+        self.location = location

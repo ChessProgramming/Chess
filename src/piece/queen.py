@@ -227,3 +227,9 @@ class Queen(Piece):
         return newLocation
 
 
+    def getimage(self):
+        return self.image
+    
+    
+    def setlocation(self, location):
+        self.location = location

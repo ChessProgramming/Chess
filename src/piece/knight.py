@@ -32,6 +32,7 @@ class Knight(Piece):
         else:
             colour = -1  
               
+    
         if( ( abs(xDiff) == 1 and abs(yDiff) == 2 ) or ( abs(xDiff) == 2 and abs(yDiff) == 1 ) ): #check whether its knight move 
             if(board[location[0]][location[1]] != colour): #checks whether the location is not occupied by the own piece
                 return True
@@ -55,3 +56,10 @@ class Knight(Piece):
                             newLocation.append([self.location[0]+i,self.location[1]+j])
         return newLocation
         
+
+    def getimage(self):
+        return self.image
+    
+    
+    def setlocation(self, location):
+        self.location = location
