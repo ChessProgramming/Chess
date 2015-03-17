@@ -3,7 +3,7 @@ Created on Mar 14, 2015
 
 @author: Venkatesh
 '''
-from tkinter import Frame
+from tkinter import Frame, Button
 
 class Cell(Frame):
     '''
@@ -13,10 +13,20 @@ class Cell(Frame):
     '''
 
 
-    def __init__(self, color, location):
-        self.color = color
-        self.location = location
+    def __init__(self, *args, **kwargs):
+        Frame.__init__(self, *args, **kwargs)
+        self.button = Button(self, compound="left", command=lambda:print(self.color), # command have to given properly
+                             width = 85, height = 85)
+        self.button.pack(side="top")
+
+    def config(self, **kwargs):
+        self.piece = kwargs['piece']
+        self.location = kwargs['location']
+        self.color = kwargs['color']
         
-        self.piece = None       # It hold the actual piece in this cell
+        self.button.config(image = self.piece.getimage())
         
-        # have to add code to make the cell as Button
+        if(self.color == "white"):
+            self.button.config(bg = "#FFD39B")
+        else:
+            self.button.config(bg = "#8B4513")
