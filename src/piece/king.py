@@ -22,7 +22,14 @@ class King():
         else:
             self.image = PhotoImage(file = "../../img/bK.png")
         
-    def is_possible(self, location, board):
+    def is_possible(self, location, tboard):
+        board = [[0 for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if(tboard[i][j] < 0):
+                    board[i][j] = -1
+                elif(tboard[i][j] > 0):
+                    board[i][j] = 1
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
 
@@ -38,7 +45,14 @@ class King():
                     return True
         return False
  
-    def get_all_moves(self, board):
+    def get_all_moves(self, tboard):
+        board = [[0 for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if(tboard[i][j] < 0):
+                    board[i][j] = -1
+                elif(tboard[i][j] > 0):
+                    board[i][j] = 1
         newLocation=[]
         
         if(self.color == "white"):

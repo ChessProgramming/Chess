@@ -23,7 +23,14 @@ class Bishop():
             self.image = PhotoImage(file = "../../img/bB.png")
 
     
-    def is_possible(self, location, board):
+    def is_possible(self, location, tboard):
+        board = [[0 for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if(tboard[i][j] < 0):
+                    board[i][j] = -1
+                elif(tboard[i][j] > 0):
+                    board[i][j] = 1
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
 
@@ -61,7 +68,15 @@ class Bishop():
 
         return True
 
-    def get_all_moves(self, board):
+    def get_all_moves(self, tboard):
+        
+        board = [[0 for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if(tboard[i][j] < 0):
+                    board[i][j] = -1
+                elif(tboard[i][j] > 0):
+                    board[i][j] = 1
         newLocation=[]
         x=self.location[0]
         y=self.location[1]
