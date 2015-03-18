@@ -27,7 +27,7 @@ class Knight():
             for j in range(8):
                 if(tboard[i][j] < 0):
                     board[i][j] = -1
-                else:
+                elif(tboard[i][j] > 0):
                     board[i][j] = 1
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]

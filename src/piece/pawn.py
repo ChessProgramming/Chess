@@ -25,13 +25,12 @@ class Pawn():
             self.image = PhotoImage(file = "../../img/bP.png")
         
     def is_possible(self, location, tboard):
-        print("Hello")
         board = [[0 for _ in range(8)] for _ in range(8)]
         for i in range(8):
             for j in range(8):
                 if(tboard[i][j] < 0):
                     board[i][j] = -1
-                else:
+                elif(tboard[i][j] > 0):
                     board[i][j] = 1
         
         if(self.color == "white"):
