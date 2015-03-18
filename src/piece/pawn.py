@@ -4,13 +4,8 @@ Created on Mar 14, 2015
 @author: Venkatesh
 '''
 
-<<<<<<< HEAD
-from piece import *
-from tkinter import PhotoImage, Tk
-=======
 from piece import *  # @UnusedWildImport
 from tkinter import PhotoImage
->>>>>>> ui updates
 
 
 class Pawn():
@@ -29,7 +24,16 @@ class Pawn():
         else:
             self.image = PhotoImage(file = "../../img/bP.png")
         
-    def is_possible(self, location, board):
+    def is_possible(self, location, tboard):
+        print("Hello")
+        board = [[0 for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if(tboard[i][j] < 0):
+                    board[i][j] = -1
+                else:
+                    board[i][j] = 1
+        
         if(self.color == "white"):
             colour = 1
         else:
@@ -87,12 +91,6 @@ class Pawn():
                 newLocation.append([self.location[0] + 2*self.move, self.location[1]])
                 
         return newLocation
-<<<<<<< HEAD
-                
-              
-=======
-        
->>>>>>> ui updates
         
     def getimage(self):
         return self.image

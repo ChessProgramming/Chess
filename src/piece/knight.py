@@ -21,7 +21,14 @@ class Knight():
         else:
             self.image = PhotoImage(file = "../../img/bN.png")
         
-    def is_possible(self, location, board):
+    def is_possible(self, location, tboard):
+        board = [[0 for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if(tboard[i][j] < 0):
+                    board[i][j] = -1
+                else:
+                    board[i][j] = 1
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
     

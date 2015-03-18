@@ -15,22 +15,27 @@ class Cell(Frame):
 
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
-        self.button = Button(self, compound="left", command=lambda:print(self.location), # command have to be given properly
-                             width = 85, height = 85)
+        self.button = Button(self, compound="left", width = 75, height = 75)
         self.button.pack(side="top")
+        self.empty = PhotoImage(file = "../../img/empty.png")
 
     def config(self, **kwargs):
         self.location = kwargs['location']
         self.color = kwargs['color']
+        self.command = kwargs['command']
         
         if(self.color == "white"):
-            self.button.config(bg = "#D3B770")      #FFD39B
+            self.button.config(bg = "#D3B770", command = lambda: self.command(self.location))      #FFD39B
         else:
-            self.button.config(bg = "#8C481C")      #8B4513
+            self.button.config(bg = "#8C481C", command = lambda: self.command(self.location))      #8B4513
             
     def setPiece(self, piece = None):
         self.piece = piece
         if(self.piece != None):
             self.button.config(image = self.piece.getimage())
-            
+        else:
+            self.button.config(image = self.empty)
+    
+    def getPiece(self):
+        return self.piece
     

@@ -3,13 +3,9 @@ Created on Mar 14, 2015
 
 @author: Venkatesh
 '''
-<<<<<<< HEAD
-from piece import *
-from tkinter import PhotoImage, Tk
-=======
+
 from piece import *  # @UnusedWildImport
 from tkinter import PhotoImage
->>>>>>> ui updates
 
 
 class Bishop():

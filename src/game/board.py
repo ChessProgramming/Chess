@@ -20,20 +20,22 @@ class Board():
 
 
     def __init__(self, root):
-        
         flag = True
-    
         self.cellarray = []
+        
+        self.touched = False
+        self.touched_location = []
+    
         for i in range(8):
             self.cellarray.append([])
             
             for j in range(8):
                 b = Cell(root)
                 if(flag == True):
-                    b.config(location=[i , j], color="white")
+                    b.config(location=[i , j], color="white", command = self.cellcallback)
                     b.grid(row=i, column=j)
                 else:
-                    b.config(location=[i , j], color="black")
+                    b.config(location=[i , j], color="black", command = self.cellcallback)
                     b.grid(row=i, column=j)
                     
                 self.cellarray[i].append(b)
@@ -65,7 +67,7 @@ class Board():
                           [-6, -6, -6, -6, -6, -6, -6, -6],
                           [-3, -5, -4, -1, -2, -4, -5, -3]
                          ]
-            
+                   
         for i in range(8):
             for j in range(8):
                 color = "white"
@@ -95,10 +97,42 @@ class Board():
                             self.cellarray[i][j].setPiece(Pawn(color, [i,j], -1))
                             
                 elif(abs(self.board[i][j]) == 0):
-                    self.cellarray[i][j].setPiece(Knight(color, [i,j]))
-                    
+                    self.cellarray[i][j].setPiece(None)
+                  
     def getboard(self):
         return self.board
+    
+    def isgameover(self):
+        pass
+    
+    def ischeckmate(self):
+        pass
+    
+    def ischeck(self):
+        pass
+    
+    def isstalemate(self):
+        pass
+    
+    def getspecialmoves(self):
+        pass
+    
+    def cellcallback(self, location):
+        if(self.touched == False):
+            self.touched = True
+            self.touched_location = location
+        else:
+            self.touched = False
+            piece = self.cellarray[self.touched_location[0]][self.touched_location[1]].getPiece() 
+            if(piece != None):
+                if(piece.is_possible(location, self.board)):
+                    self.cellarray[location[0]][location[1]].setPiece(piece)
+                    piece.setlocation(location)
+                    self.cellarray[self.touched_location[0]][self.touched_location[1]].setPiece(None)
+                    
+                    self.board[location[0]][location[1]] = self.board[self.touched_location[0]][self.touched_location[1]]
+                    self.board[self.touched_location[0]][self.touched_location[1]] = 0
+    
     
 if __name__ == "__main__":
     root = Tk()
