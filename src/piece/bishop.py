@@ -31,6 +31,10 @@ class Bishop():
                     board[i][j] = -1
                 elif(tboard[i][j] > 0):
                     board[i][j] = 1
+<<<<<<< HEAD
+=======
+                    
+>>>>>>> added engine and ui updates
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
 

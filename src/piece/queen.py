@@ -31,6 +31,10 @@ class Queen():
                     board[i][j] = -1
                 elif(tboard[i][j] > 0):
                     board[i][j] = 1
+<<<<<<< HEAD
+=======
+                    
+>>>>>>> added engine and ui updates
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
         if(self.color == "white"):
@@ -41,6 +45,7 @@ class Queen():
         #check rook moves
         if((xDiff == 0 or yDiff == 0) and (not(xDiff == 0 and yDiff == 0))): #check whether its in rook move
             if(board[location[0]][location[1]] != colour):   #check whether the location is not occupied by own piece
+                print(colour)
                 x = self.location[0]
                 y = self.location[1]
                 xinc=0
@@ -70,6 +75,7 @@ class Queen():
                     if(y != location[1]):
                         if(board[location[0]][y] != 0):
                             return False
+                return True
             else:
                 return False
 

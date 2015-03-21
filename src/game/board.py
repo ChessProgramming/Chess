@@ -121,8 +121,10 @@ class Board():
         if(self.touched == False):
             self.touched = True
             self.touched_location = location
+            self.cellarray[location[0]][location[1]].changeColor(self.touched)
         else:
             self.touched = False
+            self.cellarray[self.touched_location[0]][self.touched_location[1]].changeColor()
             piece = self.cellarray[self.touched_location[0]][self.touched_location[1]].getPiece() 
             if(piece != None):
                 if(piece.is_possible(location, self.board)):
@@ -133,9 +135,3 @@ class Board():
                     self.board[location[0]][location[1]] = self.board[self.touched_location[0]][self.touched_location[1]]
                     self.board[self.touched_location[0]][self.touched_location[1]] = 0
     
-    
-if __name__ == "__main__":
-    root = Tk()
-    board = Board(root)
-    board.initboard(playercolor = "black")
-    root.mainloop()
