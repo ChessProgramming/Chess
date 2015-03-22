@@ -30,10 +30,7 @@ class King():
                     board[i][j] = -1
                 elif(tboard[i][j] > 0):
                     board[i][j] = 1
-<<<<<<< HEAD
-=======
-                    
->>>>>>> added engine and ui updates
+
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
 
@@ -70,11 +67,34 @@ class King():
                 if(not(i==0 and j==0) ):
                     if(self.location[0]+i >=0 and self.location[0]+i <=7 and \
                        self.location[1]+j >=0 and self.location[1]+j <=7):
-                        if(board[self.location[0]][self.location[1]] != colour):    #checks whether the location not occupied by own piece
-                            newLocation.append[self.location[0]+i,self.location[1]+j]            
+                        if(board[self.location[0] + i][self.location[1] + j] != colour):    #checks whether the location not occupied by own piece
+                            newLocation.append([self.location[0] + i, self.location[1] + j])   
+                                     
 
         return newLocation
+    '''
+    @staticmethod
+    def get_all_moves(tboard, curr_location,colour):  # @DuplicatedSignature
+        board = [[0 for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if(tboard[i][j] < 0):
+                    board[i][j] = -1
+                elif(tboard[i][j] > 0):
+                    board[i][j] = 1
+        newLocation=[]
+        
+        #getting all location and checking for its own piece in that
+        for i in range(-1,2):
+            for j in range(-1,2):
+                if(not(i==0 and j==0) ):
+                    if(curr_location[0]+i >=0 and curr_location[0]+i <=7 and \
+                       curr_location[1]+j >=0 and curr_location[1]+j <=7):
+                        if(board[curr_location[0]+i][curr_location[1]+j] != colour):    #checks whether the location not occupied by own piece
+                            newLocation.append([curr_location[0]+i,curr_location[1]+j])           
 
+        return newLocation
+    '''
     def getimage(self):
         return self.image
     

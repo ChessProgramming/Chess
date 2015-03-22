@@ -31,10 +31,7 @@ class Bishop():
                     board[i][j] = -1
                 elif(tboard[i][j] > 0):
                     board[i][j] = 1
-<<<<<<< HEAD
-=======
-                    
->>>>>>> added engine and ui updates
+
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
 
@@ -71,8 +68,8 @@ class Bishop():
             return False
 
         return True
-
-    def get_all_moves(self, tboard):
+    
+    def get_all_moves(self, tboard):  
         
         board = [[0 for _ in range(8)] for _ in range(8)]
         for i in range(8):
@@ -84,12 +81,13 @@ class Bishop():
         newLocation=[]
         x=self.location[0]
         y=self.location[1]
-    
+
         if(self.color == "white"):
             colour = 1
         else:
             colour = -1
 
+        # bishop moves
         #checks for the moves in top right diagonal
         while(x<=6 and y<=6):
             x=x+1
@@ -111,8 +109,8 @@ class Bishop():
             x=x-1
             y=y-1
             if(board[x][y] == 0):
-                newLocation.append([x,y])
-                continue 
+                newLocation.append([x,y]) 
+                continue
             if(board[x][y] == colour):
                 break
             if(board[x][y] == colour*-1):
@@ -127,8 +125,8 @@ class Bishop():
             x=x-1
             y=y+1
             if(board[x][y] == 0):
-                newLocation.append([x,y])
-                continue 
+                newLocation.append([x,y]) 
+                continue
             if(board[x][y] == colour):
                 break
             if(board[x][y] == colour*-1):
@@ -151,9 +149,87 @@ class Bishop():
                 newLocation.append([x,y])
                 break 
 
-        return newLocation    
+        return newLocation
 
+    '''
+    @staticmethod
+    def get_all_moves(tboard, curr_location,colour):  # @DuplicatedSignature
+        
+        board = [[0 for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if(tboard[i][j] < 0):
+                    board[i][j] = -1
+                elif(tboard[i][j] > 0):
+                    board[i][j] = 1
+        newLocation=[]
+        x=curr_location[0]
+        y=curr_location[1]
+    
+        #checks for the moves in top right diagonal
+        while(x<=6 and y<=6):
+            x=x+1
+            y=y+1
+            if(board[x][y] == 0):
+                newLocation.append([x,y])
+                continue
+            if(board[x][y] == colour):
+                break
+            if(board[x][y] == colour*-1):
+                newLocation.append([x,y])
+                break         
 
+        x=curr_location[0]
+        y=curr_location[1]
+
+        #checks for the moves in bottom left diagonal
+        while(x>=1 and y>=1 ):
+            x=x-1
+            y=y-1
+            if(board[x][y] == 0):
+                newLocation.append([x,y])
+                continue 
+            if(board[x][y] == colour):
+                break
+            if(board[x][y] == colour*-1):
+                newLocation.append([x,y])
+                break 
+
+        x=curr_location[0]
+        y=curr_location[1]
+
+        #checks for the moves in bottom right diagonal 
+        while(x>=1 and y<=6):
+            x=x-1
+            y=y+1
+            if(board[x][y] == 0):
+                newLocation.append([x,y])
+                continue 
+            if(board[x][y] == colour):
+                break
+            if(board[x][y] == colour*-1):
+                newLocation.append([x,y])
+                break 
+
+        x=curr_location[0]
+        y=curr_location[1]
+
+        #checks for the moves in top left diagonal
+        while(x<=6 and y>=1):
+            x=x+1
+            y=y-1
+            if(board[x][y] == 0):
+                newLocation.append([x,y])
+                continue 
+            if(board[x][y] == colour):
+                break
+            if(board[x][y] == colour*-1):
+                newLocation.append([x,y])
+                break 
+
+        return newLocation
+
+    '''
     
     def getimage(self):
         return self.image

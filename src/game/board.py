@@ -108,8 +108,27 @@ class Board():
     def ischeckmate(self):
         pass
     
-    def ischeck(self):
-        pass
+    def ischeck(self, location):
+        for i in range(8):
+            for j in range(8):
+                if(self.board[i][j] == -1):
+                    bK = [i,j]
+                elif(self.board[i][j] == 1):
+                    wK = [i,j]
+        if(self.board[location[0]][location[1]] < 0):   #when satisfied  want to check whether black king in danger
+            for i in range(8):
+                for j in range(8):
+                    if(self.board[i][j] > 0  and not (i == location[0] and j == location[1])):
+                        if(bK in self.cellarray[i][j].getPiece().get_all_moves(self.board)):
+                            return True
+        elif(self.board[location[0]][location[1]] > 0):  #when satisfied  want to check whether white king in danger
+            for i in range(8):
+                for j in range(8):
+                    if(self.board[i][j] < 0 and not (i == location[0] and j == location[1])):
+                        if(wK in self.cellarray[i][j].getPiece().get_all_moves(self.board)):
+                            return True
+        return False
+        
     
     def isstalemate(self):
         pass
@@ -127,11 +146,16 @@ class Board():
             self.cellarray[self.touched_location[0]][self.touched_location[1]].changeColor()
             piece = self.cellarray[self.touched_location[0]][self.touched_location[1]].getPiece() 
             if(piece != None):
+                start = self.board[self.touched_location[0]][self.touched_location[1]]
+                end = self.board[location[0]][location[1]]
                 if(piece.is_possible(location, self.board)):
-                    self.cellarray[location[0]][location[1]].setPiece(piece)
-                    piece.setlocation(location)
-                    self.cellarray[self.touched_location[0]][self.touched_location[1]].setPiece(None)
-                    
-                    self.board[location[0]][location[1]] = self.board[self.touched_location[0]][self.touched_location[1]]
+                    self.board[location[0]][location[1]] = start
                     self.board[self.touched_location[0]][self.touched_location[1]] = 0
+                    if(not self.ischeck(location)):
+                        self.cellarray[location[0]][location[1]].setPiece(piece)
+                        piece.setlocation(location)
+                        self.cellarray[self.touched_location[0]][self.touched_location[1]].setPiece(None)
+                    else:
+                        self.board[self.touched_location[0]][self.touched_location[1]] = start
+                        self.board[location[0]][location[1]] = end
     

@@ -31,10 +31,7 @@ class Queen():
                     board[i][j] = -1
                 elif(tboard[i][j] > 0):
                     board[i][j] = 1
-<<<<<<< HEAD
-=======
-                    
->>>>>>> added engine and ui updates
+
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
         if(self.color == "white"):
@@ -235,15 +232,144 @@ class Queen():
             if(board[self.location[0]][y] == 0):
                 newLocation.append([self.location[0],y])
                 continue
-            if(board[self.location[1]][y] == colour):
+            if(board[self.location[0]][y] == colour):
                 break
-            if(board[self.location[1]][y] == colour*-1):
+            if(board[self.location[0]][y] == colour*-1):
                 newLocation.append([self.location[0],y])
+                break
+        return newLocation
+    '''
+    @staticmethod
+    def get_all_moves(tboard, curr_location,colour):  # @DuplicatedSignature
+        board = [[0 for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if(tboard[i][j] < 0):
+                    board[i][j] = -1
+                elif(tboard[i][j] > 0):
+                    board[i][j] = 1
+        newLocation=[]
+        x=curr_location[0]
+        y=curr_location[1]
+
+
+        # bishop moves
+        #checks for the moves in top right diagonal
+        while(x<=6 and y<=6):
+            x=x+1
+            y=y+1
+            if(board[x][y] == 0):
+                newLocation.append([x,y])
+                continue
+            if(board[x][y] == colour):
+                break
+            if(board[x][y] == colour*-1):
+                newLocation.append([x,y])
+                break         
+
+        x=curr_location[0]
+        y=curr_location[1]
+
+        #checks for the moves in bottom left diagonal
+        while(x>=1 and y>=1 ):
+            x=x-1
+            y=y-1
+            if(board[x][y] == 0):
+                newLocation.append([x,y]) 
+                continue
+            if(board[x][y] == colour):
+                break
+            if(board[x][y] == colour*-1):
+                newLocation.append([x,y])
+                break 
+
+        x=curr_location[0]
+        y=curr_location[1]
+
+        #checks for the moves in bottom right diagonal 
+        while(x>=1 and y<=6):
+            x=x-1
+            y=y+1
+            if(board[x][y] == 0):
+                newLocation.append([x,y]) 
+                continue
+            if(board[x][y] == colour):
+                break
+            if(board[x][y] == colour*-1):
+                newLocation.append([x,y])
+                break 
+
+        x=curr_location[0]
+        y=curr_location[1]
+
+        #checks for the moves in top left diagonal
+        while(x<=6 and y>=1):
+            x=x+1
+            y=y-1
+            if(board[x][y] == 0):
+                newLocation.append([x,y])
+                continue 
+            if(board[x][y] == colour):
+                break
+            if(board[x][y] == colour*-1):
+                newLocation.append([x,y])
+                break 
+    
+        # rook moves
+        #checks for the moves in down direction
+        while(x > 0):
+            x -= 1
+            if(board[x][curr_location[1]] == 0):
+                newLocation.append([x,curr_location[1]])
+                continue    
+            if(board[x][curr_location[1]] == colour):
+                break
+            if(board[x][curr_location[1]] == colour*-1):
+                newLocation.append([x,curr_location[1]])
+                break
+        
+        x = curr_location[0]
+        
+        #checks for the moves in up direction
+        while(x < 7):
+            x +=1
+            if(board[x][curr_location[1]] == 0):
+                newLocation.append([x,curr_location[1]])
+                continue
+            if(board[x][curr_location[1]] == colour):
+                break 
+            if(board[x][curr_location[1]] == colour*-1):
+                newLocation.append([x,curr_location[1]])
+                break
+    
+        #checks for the moves in left direction
+        while(y > 0):
+            y -= 1
+            if(board[curr_location[0]][y] == 0):
+                newLocation.append([curr_location[0],y])
+                continue
+            if(board[curr_location[0]][y] == colour):
+                break 
+            if(board[curr_location[0]][y] == colour*-1):
+                newLocation.append([curr_location[0],y])
+                break
+        
+        y = curr_location[1]
+    
+        #checks for the moves right direction
+        while(y < 7):
+            y +=1
+            if(board[curr_location[0]][y] == 0):
+                newLocation.append([curr_location[0],y])
+                continue
+            if(board[curr_location[0]][y] == colour):
+                break
+            if(board[curr_location[0]][y] == colour*-1):
+                newLocation.append([curr_location[0],y])
                 break
     
         return newLocation
-
-
+    '''
     def getimage(self):
         return self.image
     

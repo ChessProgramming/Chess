@@ -97,7 +97,39 @@ class Pawn():
                 newLocation.append([self.location[0] + 2*self.move, self.location[1]])
                 
         return newLocation
-        
+    '''    
+    @staticmethod
+    def get_all_moves(tboard, curr_location,colour, move):  # @DuplicatedSignature
+        board = [[0 for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if(tboard[i][j] < 0):
+                    board[i][j] = -1
+                elif(tboard[i][j] > 0):
+                    board[i][j] = 1
+        newLocation = []
+            
+        if(move == 1):
+            start = 1
+        else:
+            start = 6
+            
+        if(curr_location[0] + move >=0 and curr_location[0] + move <=7): # boundary condition
+            if(board[curr_location[0] + move][curr_location[1]] == 0): #for single forward move
+                newLocation.append([curr_location[0] + move, curr_location[1]])
+            
+            if(curr_location[1]-1 >= 0 and board[curr_location[0] + move][curr_location[1]-1] == -1*colour): #for left cross move
+                newLocation.append([curr_location[0] + move, curr_location[1]-1])
+             
+            if(curr_location[1]+1 <= 7 and board[curr_location[0] + move][curr_location[1]+1] == -1*colour): #for right cross move
+                newLocation.append([curr_location[0] + move, curr_location[1]+1])   
+                
+            if(curr_location[0] == start and board[curr_location[0] + move][curr_location[1]] == 0 \
+               and board[curr_location[0] + 2*move][curr_location[1]] == 0): #for double step from initial
+                newLocation.append([curr_location[0] + 2*move, curr_location[1]])
+                
+        return newLocation
+    '''    
     def getimage(self):
         return self.image
     
