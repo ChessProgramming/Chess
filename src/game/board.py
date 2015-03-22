@@ -102,11 +102,48 @@ class Board():
     def getboard(self):
         return self.board
     
-    def isgameover(self):
-        pass
     
-    def ischeckmate(self):
-        pass
+    def isgameover(self, location):  
+        if(self.board[location[0]][location[1]] < 0): # when satisfied want to check whether white king is locked
+            for i in range(8):
+                for j in range(8):
+                    if(self.board[i][j] > 0):
+                        moves = self.cellarray[i][j].getPiece().get_all_moves(self.board)
+                        start = self.board[i][j]
+                        for m in moves:
+                            #changing the board and sending to if check and then again reversing the board
+                            end = self.board[m[0]][m[1]]
+                            self.board[m[0]][m[1]] = start
+                            self.board[i][j] = 0
+                            if(not self.ischeck(m)):
+                                self.board[i][j] = start
+                                self.board[m[0]][m[1]] = end
+                                return False
+                            else:
+                                self.board[i][j] = start
+                                self.board[m[0]][m[1]] = end
+                                
+        elif(self.board[location[0]][location[1]] > 0): # when satisfied want to check whether black king is locked
+            for i in range(8):
+                for j in range(8):
+                    if(self.board[i][j] < 0):
+                        moves = self.cellarray[i][j].getPiece().get_all_moves(self.board)
+                        start = self.board[i][j]
+                        for m in moves:
+                            #changing the board and sending to if check and then again reversing the board
+                            end = self.board[m[0]][m[1]]
+                            self.board[m[0]][m[1]] = start
+                            self.board[i][j] = 0
+                            if(not self.ischeck(m)):
+                                self.board[i][j] = start
+                                self.board[m[0]][m[1]] = end
+                                return False
+                            else:
+                                self.board[i][j] = start
+                                self.board[m[0]][m[1]] = end
+            
+        return True        
+            
     
     def ischeck(self, location):
         for i in range(8):
@@ -158,4 +195,21 @@ class Board():
                     else:
                         self.board[self.touched_location[0]][self.touched_location[1]] = start
                         self.board[location[0]][location[1]] = end
+                           
+                    if(self.isgameover(location)):
+                        for i in range(8):
+                            for j in range(8):
+                                if(self.board[i][j] == -1):
+                                    bK = [i,j]
+                                elif(self.board[i][j] == 1):
+                                    wK = [i,j]
+                        if(self.board[location[0]][location[1]] > 0):
+                            oppo = bK
+                        else:
+                            oppo = wK
+                            
+                        if(self.ischeck(oppo)):
+                            print("checkmate")
+                        else:
+                            print("stalemate")
     

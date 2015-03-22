@@ -199,6 +199,7 @@ class Queen():
                 break
         
         x = self.location[0]
+        y=self.location[1]
         
         #checks for the moves in up direction
         while(x < 7):
@@ -376,3 +377,18 @@ class Queen():
     
     def setlocation(self, location):
         self.location = location
+        
+'''        
+if __name__ == "__main__":
+    queen = Queen("white",[0,4])
+    board=[[-2, 0, 0, 1, 2, 4, 5, 3],
+    [6, 6, 0, 6, 6, 6, 6, 6],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, -6, 0, -4, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [-6, -6, -6, 0, -6, -6, -6, -6],
+    [-3, -5, 0, -1, 0, -4, -5, -3]
+    ]
+    print(queen.get_all_moves(board))
+'''
