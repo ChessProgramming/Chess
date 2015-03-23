@@ -4,7 +4,6 @@ Created on Mar 14, 2015
 @author: Venkatesh
 '''
 
-from tkinter import Tk
 from game.cell import Cell
 from piece.king import King
 from piece.rook import Rook
@@ -20,12 +19,12 @@ class Board():
 
 
     def __init__(self, root):
-        flag = True
         self.cellarray = []
-        
         self.touched = False
         self.touched_location = []
     
+        self.is_white_move = True
+        flag = True
         for i in range(8):
             self.cellarray.append([])
             
@@ -175,9 +174,10 @@ class Board():
     
     def cellcallback(self, location):
         if(self.touched == False):
-            self.touched = True
-            self.touched_location = location
-            self.cellarray[location[0]][location[1]].changeColor(self.touched)
+            if(self.isvalidtouch(location)):
+                self.touched = True
+                self.touched_location = location
+                self.cellarray[location[0]][location[1]].changeColor(self.touched)
         else:
             self.touched = False
             self.cellarray[self.touched_location[0]][self.touched_location[1]].changeColor()
@@ -188,6 +188,7 @@ class Board():
                 if(piece.is_possible(location, self.board)):
                     self.board[location[0]][location[1]] = start
                     self.board[self.touched_location[0]][self.touched_location[1]] = 0
+<<<<<<< HEAD
                     if(not self.ischeck(location)):
                         self.cellarray[location[0]][location[1]].setPiece(piece)
                         piece.setlocation(location)
@@ -213,3 +214,14 @@ class Board():
                         else:
                             print("stalemate")
     
+=======
+                    self.is_white_move = not self.is_white_move
+                    
+    def isvalidtouch(self, location):
+        piece = self.cellarray[location[0]][location[1]].getPiece()
+        if(piece != None):
+            if(piece.getcolor() == "white" and self.is_white_move):
+                return True
+            if(not(piece.getcolor() == "white" or self.is_white_move)):
+                return True
+>>>>>>> added isvalid move additional ui updates

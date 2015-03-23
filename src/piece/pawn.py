@@ -137,3 +137,5 @@ class Pawn():
     def setlocation(self, location):
         self.location = location
         
+    def getcolor(self):
+        return self.color

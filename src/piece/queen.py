@@ -378,6 +378,7 @@ class Queen():
     def setlocation(self, location):
         self.location = location
         
+<<<<<<< HEAD
 '''        
 if __name__ == "__main__":
     queen = Queen("white",[0,4])
@@ -392,3 +393,7 @@ if __name__ == "__main__":
     ]
     print(queen.get_all_moves(board))
 '''
+=======
+    def getcolor(self):
+        return self.color
+>>>>>>> added isvalid move additional ui updates
