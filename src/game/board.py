@@ -188,7 +188,7 @@ class Board():
                 if(piece.is_possible(location, self.board)):
                     self.board[location[0]][location[1]] = start
                     self.board[self.touched_location[0]][self.touched_location[1]] = 0
-<<<<<<< HEAD
+
                     if(not self.ischeck(location)):
                         self.cellarray[location[0]][location[1]].setPiece(piece)
                         piece.setlocation(location)
@@ -214,7 +214,6 @@ class Board():
                         else:
                             print("stalemate")
     
-=======
                     self.is_white_move = not self.is_white_move
                     
     def isvalidtouch(self, location):
@@ -224,4 +223,3 @@ class Board():
                 return True
             if(not(piece.getcolor() == "white" or self.is_white_move)):
                 return True
->>>>>>> added isvalid move additional ui updates

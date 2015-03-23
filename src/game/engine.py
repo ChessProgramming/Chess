@@ -50,19 +50,12 @@ class App(Tk):
     def quit(self, event):
         sys.exit(0)
         
-<<<<<<< HEAD
-    def newCallback(self, event):
-        pass
-    
-=======
     def callback_new(self, event = 0):
         top = Toplevel(self)
         mymenu1 = MyOptionMenu(top, 'Select status', 'a','b','c')
         mymenu1.pack(side=BOTTOM)
         top.mainloop()
         
->>>>>>> added isvalid move additional ui updates
-
 if __name__ == "__main__":
     root = App()
     
