@@ -11,13 +11,12 @@ from piece.queen import Queen
 from piece.bishop import Bishop
 from piece.knight import Knight
 from piece.pawn import Pawn
-<<<<<<< HEAD
+
 from tkinter import Toplevel
 import sys
 from ai.alphabeta import AlphaBeta
-=======
 from piece.piecemap import PieceMap
->>>>>>> updated ischeck and successor
+
 
 class Board():
     '''
@@ -136,7 +135,7 @@ class Board():
                             end = board[m[0]][m[1]]
                             board[m[0]][m[1]] = start
                             board[i][j] = 0
-                            if(not self.ischeck(m)):
+                            if(not self.ischeck(board,m)):
                                 board[i][j] = start
                                 board[m[0]][m[1]] = end
                                 return False
@@ -202,7 +201,10 @@ class Board():
                 for j in range(8):
                     if(board[i][j] < 0 and not (i == location[0] and j == location[1])):
                         f = PieceMap.getFun(board[i][j])
-                        moves = f([i,j],board)
+                        if(abs(board[i][j]) == 6):
+                            moves = f([i,j],board,pawn_move)
+                        else:
+                            moves = f([i,j],board)
                         if(wK in moves):
                             return True
         return False
@@ -262,7 +264,7 @@ class Board():
                     self.board[location[0]][location[1]] = start
                     self.board[self.touched_location[0]][self.touched_location[1]] = 0
 
-                    if(not self.ischeck(location)):
+                    if(not self.ischeck(self.board, location)):
                         self.cellarray[location[0]][location[1]].setPiece(piece)
                         piece.setlocation(location)
                         self.cellarray[self.touched_location[0]][self.touched_location[1]].setPiece(None)
@@ -282,7 +284,7 @@ class Board():
                         else:
                             oppo = wK
                             
-                        if(self.ischeck(oppo)):
+                        if(self.ischeck(self.board, oppo)):
                             print("checkmate")
                             top = Toplevel()
                             top.after(0, sys.exit())

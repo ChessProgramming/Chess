@@ -52,8 +52,9 @@ class PieceMap(object):
             return 5;
         elif(abs(number) == 4 or abs(number) == 5):
             return 3;
-        
-    def getFun(self, number):
+    
+    @staticmethod   
+    def getFun(number):
         if(abs(number) == 1):
             return King.static_get_all_moves
         elif(abs(number) == 2):

@@ -52,7 +52,7 @@ class Knight():
                         if(board[self.location[0]+i][self.location[1]+j] * colour <= 0): #checks whether the location is not occupied by the own piece
                             newLocation.append([self.location[0]+i,self.location[1]+j])
         return newLocation
-<<<<<<< HEAD
+
        
     @staticmethod
     def static_get_all_moves(curr_location, board):
@@ -66,10 +66,7 @@ class Knight():
                         if(board[curr_location[0]+i][curr_location[1]+j] * colour <= 0): #checks whether the location is not occupied by the own piece
                             newLocation.append([curr_location[0]+i,curr_location[1]+j])
         return newLocation
-    
-=======
-   
->>>>>>> updated ischeck and successor
+
     def getimage(self):
         return self.image
     

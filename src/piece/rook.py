@@ -130,7 +130,7 @@ class Rook():
                 newLocation.append([self.location[0],y])
                 break
         return newLocation
-<<<<<<< HEAD
+
     
     @staticmethod
     def static_get_all_moves(curr_location, board):
@@ -193,9 +193,7 @@ class Rook():
     
         return newLocation
     
-=======
-    
->>>>>>> updated ischeck and successor
+
     def getimage(self):
         return self.image
     

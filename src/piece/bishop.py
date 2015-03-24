@@ -136,7 +136,7 @@ class Bishop():
 
         return newLocation
 
-<<<<<<< HEAD
+
     
     @staticmethod
     def static_get_all_moves(curr_location, board):  # @DuplicatedSignature
@@ -209,8 +209,7 @@ class Bishop():
 
         return newLocation
 
-=======
->>>>>>> updated ischeck and successor
+
     
     def getimage(self):
         return self.image

@@ -35,14 +35,9 @@ class King():
             
         if((xDiff == -1 or xDiff == 1 or xDiff == 0) and (yDiff == -1 or yDiff == 1 or yDiff == 0)): #checks its in adjacent cell
             if(not(xDiff == 0 and yDiff == 0 )):  #checks not in same location
-<<<<<<< HEAD
-=======
-                print("true")
->>>>>>> updated ischeck and successor
                 if(board[location[0]][location[1]] * colour <= 0):
                     return True
                 
-        print("False")
         return False
  
     def get_all_moves(self, board):
@@ -63,7 +58,6 @@ class King():
                                      
 
         return newLocation
-<<<<<<< HEAD
     
     @staticmethod
     def static_get_all_moves(curr_location, board):  # @DuplicatedSignature
@@ -80,9 +74,7 @@ class King():
                             newLocation.append([curr_location[0]+i,curr_location[1]+j])           
         return newLocation
     
-=======
-   
->>>>>>> updated ischeck and successor
+
     def getimage(self):
         return self.image
     
