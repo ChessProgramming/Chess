@@ -12,7 +12,7 @@ class MyOptionMenu(OptionMenu):
     def __init__(self, master, status, *options):
         self.var = StringVar(master)
         self.var.set(status)
-        OptionMenu.__init__(self, master, self.var, *options)
+        OptionMenu.__init__(self, master, self.var, *options, command = lambda x: print(x))
         self.config(font=('calibri',(10)),bg='white', relief = GROOVE)
         self['menu'].config(font=('calibri',(10)),bg='white')
 
@@ -52,7 +52,7 @@ class App(Tk):
         
     def callback_new(self, event = 0):
         top = Toplevel(self)
-        mymenu1 = MyOptionMenu(top, 'Select status', 'a','b','c')
+        mymenu1 = MyOptionMenu(top, "Human vs Human", 'Human vs Human','Human vs Computer','Computer vs Human')
         mymenu1.pack(side=BOTTOM)
         top.mainloop()
         

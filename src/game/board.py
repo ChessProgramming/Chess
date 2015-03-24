@@ -11,6 +11,9 @@ from piece.queen import Queen
 from piece.bishop import Bishop
 from piece.knight import Knight
 from piece.pawn import Pawn
+from tkinter import Toplevel
+import sys
+from ai.alphabeta import AlphaBeta
 
 class Board():
     '''
@@ -22,6 +25,7 @@ class Board():
         self.cellarray = []
         self.touched = False
         self.touched_location = []
+        self.algo = AlphaBeta(self)
     
         self.is_white_move = True
         flag = True
@@ -211,8 +215,11 @@ class Board():
                             
                         if(self.ischeck(oppo)):
                             print("checkmate")
+                            top = Toplevel()
+                            top.after(0, sys.exit())
                         else:
                             print("stalemate")
+                            self.is_white_move = not self.is_white_move
     
                     self.is_white_move = not self.is_white_move
                     

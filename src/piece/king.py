@@ -42,7 +42,7 @@ class King():
 
         if((xDiff == -1 or xDiff == 1 or xDiff == 0) and (yDiff == -1 or yDiff == 1 or yDiff == 0)): #checks its in adjacent cell
             if(not(xDiff == 0 and yDiff == 0 )):  #checks not in same location
-                if(board[location[0]][location[1]] != colour):
+                if(board[location[0]][location[1]] * colour <= 0):
                     return True
         return False
  
@@ -72,29 +72,22 @@ class King():
                                      
 
         return newLocation
-    '''
+    
     @staticmethod
-    def get_all_moves(tboard, curr_location,colour):  # @DuplicatedSignature
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
+    def static_get_all_moves(curr_location, board):  # @DuplicatedSignature
         newLocation=[]
         
+        colour = board[curr_location[0]][curr_location[1]]
         #getting all location and checking for its own piece in that
         for i in range(-1,2):
             for j in range(-1,2):
                 if(not(i==0 and j==0) ):
                     if(curr_location[0]+i >=0 and curr_location[0]+i <=7 and \
                        curr_location[1]+j >=0 and curr_location[1]+j <=7):
-                        if(board[curr_location[0]+i][curr_location[1]+j] != colour):    #checks whether the location not occupied by own piece
+                        if(board[curr_location[0]+i][curr_location[1]+j] * colour <= 0):    #checks whether the location not occupied by own piece
                             newLocation.append([curr_location[0]+i,curr_location[1]+j])           
-
         return newLocation
-    '''
+    
     def getimage(self):
         return self.image
     

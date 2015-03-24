@@ -239,21 +239,14 @@ class Queen():
                 newLocation.append([self.location[0],y])
                 break
         return newLocation
-    '''
+    
     @staticmethod
-    def get_all_moves(tboard, curr_location,colour):  # @DuplicatedSignature
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
+    def static_get_all_moves(curr_location, board):  # @DuplicatedSignature
         newLocation=[]
         x=curr_location[0]
         y=curr_location[1]
 
-
+        colour = board[curr_location[0]][curr_location[1]]
         # bishop moves
         #checks for the moves in top right diagonal
         while(x<=6 and y<=6):
@@ -262,9 +255,9 @@ class Queen():
             if(board[x][y] == 0):
                 newLocation.append([x,y])
                 continue
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break         
 
@@ -278,9 +271,9 @@ class Queen():
             if(board[x][y] == 0):
                 newLocation.append([x,y]) 
                 continue
-            if(board[x][y] == colour):
+            if(board[x][y]* colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break 
 
@@ -294,9 +287,9 @@ class Queen():
             if(board[x][y] == 0):
                 newLocation.append([x,y]) 
                 continue
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break 
 
@@ -310,9 +303,9 @@ class Queen():
             if(board[x][y] == 0):
                 newLocation.append([x,y])
                 continue 
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break 
     
@@ -323,9 +316,9 @@ class Queen():
             if(board[x][curr_location[1]] == 0):
                 newLocation.append([x,curr_location[1]])
                 continue    
-            if(board[x][curr_location[1]] == colour):
+            if(board[x][curr_location[1]] * colour >= 0):
                 break
-            if(board[x][curr_location[1]] == colour*-1):
+            if(board[x][curr_location[1]] * colour <= 0):
                 newLocation.append([x,curr_location[1]])
                 break
         
@@ -337,21 +330,22 @@ class Queen():
             if(board[x][curr_location[1]] == 0):
                 newLocation.append([x,curr_location[1]])
                 continue
-            if(board[x][curr_location[1]] == colour):
+            if(board[x][curr_location[1]] * colour >= 0):
                 break 
-            if(board[x][curr_location[1]] == colour*-1):
+            if(board[x][curr_location[1]] * colour <= 0):
                 newLocation.append([x,curr_location[1]])
                 break
     
         #checks for the moves in left direction
+        y = curr_location[1]
         while(y > 0):
             y -= 1
             if(board[curr_location[0]][y] == 0):
                 newLocation.append([curr_location[0],y])
                 continue
-            if(board[curr_location[0]][y] == colour):
+            if(board[curr_location[0]][y] * colour >= 0):
                 break 
-            if(board[curr_location[0]][y] == colour*-1):
+            if(board[curr_location[0]][y] * colour <= 0):
                 newLocation.append([curr_location[0],y])
                 break
         
@@ -363,14 +357,14 @@ class Queen():
             if(board[curr_location[0]][y] == 0):
                 newLocation.append([curr_location[0],y])
                 continue
-            if(board[curr_location[0]][y] == colour):
+            if(board[curr_location[0]][y] * colour >= 0):
                 break
-            if(board[curr_location[0]][y] == colour*-1):
+            if(board[curr_location[0]][y] * colour <= 0):
                 newLocation.append([curr_location[0],y])
                 break
     
         return newLocation
-    '''
+
     def getimage(self):
         return self.image
     

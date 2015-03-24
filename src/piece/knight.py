@@ -66,26 +66,20 @@ class Knight():
                         if(board[self.location[0]+i][self.location[1]+j] != colour): #checks whether the location is not occupied by the own piece
                             newLocation.append([self.location[0]+i,self.location[1]+j])
         return newLocation
-    '''   
+       
     @staticmethod
-    def get_all_moves(tboard, curr_location,colour):  # @DuplicatedSignature
+    def static_get_all_moves(curr_location, board):
         lis  = [-1,-2,1,2]
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
+        colour = board[curr_location[0]][curr_location[1]]
         newLocation = []      
         for i in lis:
             for j in lis:
                 if(abs(i)!=abs(j)):
                     if(curr_location[0]+i >= 0 and curr_location[0]+i <= 7 and curr_location[1]+j >= 0 and curr_location[1]+j <= 7 ): #checks boundary condition
-                        if(board[curr_location[0]+i][curr_location[1]+j] != colour): #checks whether the location is not occupied by the own piece
+                        if(board[curr_location[0]+i][curr_location[1]+j] * colour <= 0): #checks whether the location is not occupied by the own piece
                             newLocation.append([curr_location[0]+i,curr_location[1]+j])
         return newLocation
-    '''
+    
     def getimage(self):
         return self.image
     

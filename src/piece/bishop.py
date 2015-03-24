@@ -151,21 +151,15 @@ class Bishop():
 
         return newLocation
 
-    '''
+    
     @staticmethod
-    def get_all_moves(tboard, curr_location,colour):  # @DuplicatedSignature
-        
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
+    def static_get_all_moves(curr_location, board):  # @DuplicatedSignature
         newLocation=[]
         x=curr_location[0]
         y=curr_location[1]
-    
+        
+        colour = board[curr_location[0]][curr_location[1]]
+        
         #checks for the moves in top right diagonal
         while(x<=6 and y<=6):
             x=x+1
@@ -173,9 +167,9 @@ class Bishop():
             if(board[x][y] == 0):
                 newLocation.append([x,y])
                 continue
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break         
 
@@ -183,15 +177,15 @@ class Bishop():
         y=curr_location[1]
 
         #checks for the moves in bottom left diagonal
-        while(x>=1 and y>=1 ):
+        while(x>=1 and y>=1):
             x=x-1
             y=y-1
             if(board[x][y] == 0):
                 newLocation.append([x,y])
                 continue 
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break 
 
@@ -205,9 +199,9 @@ class Bishop():
             if(board[x][y] == 0):
                 newLocation.append([x,y])
                 continue 
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break 
 
@@ -221,15 +215,14 @@ class Bishop():
             if(board[x][y] == 0):
                 newLocation.append([x,y])
                 continue 
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break 
 
         return newLocation
 
-    '''
     
     def getimage(self):
         return self.image
