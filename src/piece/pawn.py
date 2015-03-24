@@ -25,6 +25,10 @@ class Pawn():
             self.image = PhotoImage(file = "../../img/bP.png")
         
     def is_possible(self, location, board):
+<<<<<<< HEAD
+=======
+        
+>>>>>>> updated ischeck and successor
         if(self.color == "white"):
             colour = 1
         else:
@@ -49,19 +53,16 @@ class Pawn():
                 return True
             
         if(xDiff==1 and (yDiff==-1 or yDiff ==1)):  #for taking opponent piece 
+<<<<<<< HEAD
             if(board[location[0]][location[1]] *colour <= 0):
+=======
+            if(board[location[0]][location[1]] * colour <= 0 ):
+>>>>>>> updated ischeck and successor
                 return True
 
         return False
      
-    def get_all_moves(self, tboard ):
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
+    def get_all_moves(self, board ):
         newLocation = []
         
         if(self.color == "white"):
@@ -78,10 +79,10 @@ class Pawn():
             if(board[self.location[0] + self.move][self.location[1]] == 0): #for single forward move
                 newLocation.append([self.location[0] + self.move, self.location[1]])
             
-            if(self.location[1]-1 >= 0 and board[self.location[0] + self.move][self.location[1]-1] == -1*colour): #for left cross move
+            if(self.location[1]-1 >= 0 and board[self.location[0] + self.move][self.location[1]-1]  *colour > 0): #for left cross move
                 newLocation.append([self.location[0] + self.move, self.location[1]-1])
              
-            if(self.location[1]+1 <= 7 and board[self.location[0] + self.move][self.location[1]+1] == -1*colour): #for right cross move
+            if(self.location[1]+1 <= 7 and board[self.location[0] + self.move][self.location[1]+1] * colour > 0): #for right cross move
                 newLocation.append([self.location[0] + self.move, self.location[1]+1])   
                 
             if(self.location[0] == start and board[self.location[0] + self.move][self.location[1]] == 0 \
@@ -89,6 +90,7 @@ class Pawn():
                 newLocation.append([self.location[0] + 2*self.move, self.location[1]])
                 
         return newLocation
+<<<<<<< HEAD
         
     @staticmethod
     def static_get_all_moves(curr_location, board, move):  # @DuplicatedSignature
@@ -115,6 +117,9 @@ class Pawn():
                 
         return newLocation
     
+=======
+      
+>>>>>>> updated ischeck and successor
     def getimage(self):
         return self.image
     

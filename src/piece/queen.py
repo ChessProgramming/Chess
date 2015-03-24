@@ -23,15 +23,8 @@ class Queen():
             self.image = PhotoImage(file = "../../img/bQ.png")
         
 
-    def is_possible(self, location, tboard):
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
-
+    def is_possible(self, location, board):
+       
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
         if(self.color == "white"):
@@ -41,8 +34,9 @@ class Queen():
 
         #check rook moves
         if((xDiff == 0 or yDiff == 0) and (not(xDiff == 0 and yDiff == 0))): #check whether its in rook move
-            if(board[location[0]][location[1]] != colour):   #check whether the location is not occupied by own piece
-                print(colour)
+            print("True")
+            if(board[location[0]][location[1]] * colour <= 0):   #check whether the location is not occupied by own piece
+                print("True")
                 x = self.location[0]
                 y = self.location[1]
                 xinc=0
@@ -58,14 +52,14 @@ class Queen():
                 else:
                     yinc = 1
 
-            #moves in vertical direction in search of obstracle in between
+            #moves in vertical direction in search of obstacle in between
 
                 while(xinc !=0 and x != location[0]):
                     x = x +    xinc
                     if(x != location[0]):
                         if(board[x][location[1]]!=0):
                             return False    
-            #moves in horizontal direction in search of obstracle in between
+            #moves in horizontal direction in search of obstacle in between
             
                 while(yinc !=0 and y != location[1]):
                     y = y + yinc
@@ -78,7 +72,7 @@ class Queen():
 
         #check bishop move
         if( abs(xDiff) == abs(yDiff)):  #checks whether its in diagonal location 
-            if( board[location[0]][location[1]] != colour): #cheks whether the location is not occupied by the own piece
+            if( board[location[0]][location[1]] * colour <= 0): #checks whether the location is not occupied by the own piece
                 x = self.location[0]
                 y = self.location[1]
 
@@ -92,7 +86,7 @@ class Queen():
                 else:
                         yinc=1
             
-                #moves in location diagonal in search of obstracle
+                #moves in location diagonal in search of obstacle
                 while(x != location[0] and y != location[1]):
                     x = x + xinc
                     y = y + yinc
@@ -106,14 +100,8 @@ class Queen():
 
         return True
     
-    def get_all_moves(self,tboard):
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
+    def get_all_moves(self,board):
+        
         newLocation=[]
         x=self.location[0]
         y=self.location[1]
@@ -131,9 +119,9 @@ class Queen():
             if(board[x][y] == 0):
                 newLocation.append([x,y])
                 continue
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break         
 
@@ -147,9 +135,9 @@ class Queen():
             if(board[x][y] == 0):
                 newLocation.append([x,y]) 
                 continue
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break 
 
@@ -163,9 +151,9 @@ class Queen():
             if(board[x][y] == 0):
                 newLocation.append([x,y]) 
                 continue
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break 
 
@@ -179,9 +167,9 @@ class Queen():
             if(board[x][y] == 0):
                 newLocation.append([x,y])
                 continue 
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break 
     
@@ -192,9 +180,9 @@ class Queen():
             if(board[x][self.location[1]] == 0):
                 newLocation.append([x,self.location[1]])
                 continue    
-            if(board[x][self.location[1]] == colour):
+            if(board[x][self.location[1]] * colour >= 0):
                 break
-            if(board[x][self.location[1]] == colour*-1):
+            if(board[x][self.location[1]] * colour  <= 0):
                 newLocation.append([x,self.location[1]])
                 break
         
@@ -207,9 +195,9 @@ class Queen():
             if(board[x][self.location[1]] == 0):
                 newLocation.append([x,self.location[1]])
                 continue
-            if(board[x][self.location[1]] == colour):
+            if(board[x][self.location[1]] * colour >= 0):
                 break 
-            if(board[x][self.location[1]] == colour*-1):
+            if(board[x][self.location[1]] * colour <= 0):
                 newLocation.append([x,self.location[1]])
                 break
     
@@ -219,9 +207,9 @@ class Queen():
             if(board[self.location[0]][y] == 0):
                 newLocation.append([self.location[0],y])
                 continue
-            if(board[self.location[0]][y] == colour):
+            if(board[self.location[0]][y] * colour >= 0):
                 break 
-            if(board[self.location[0]][y] == colour*-1):
+            if(board[self.location[0]][y] * colour <= 0):
                 newLocation.append([self.location[0],y])
                 break
         
@@ -233,12 +221,13 @@ class Queen():
             if(board[self.location[0]][y] == 0):
                 newLocation.append([self.location[0],y])
                 continue
-            if(board[self.location[0]][y] == colour):
+            if(board[self.location[0]][y] * colour >= 0):
                 break
-            if(board[self.location[0]][y] == colour*-1):
+            if(board[self.location[0]][y] * colour <= 0):
                 newLocation.append([self.location[0],y])
                 break
         return newLocation
+<<<<<<< HEAD
     
     @staticmethod
     def static_get_all_moves(curr_location, board):  # @DuplicatedSignature
@@ -365,6 +354,9 @@ class Queen():
     
         return newLocation
 
+=======
+    
+>>>>>>> updated ischeck and successor
     def getimage(self):
         return self.image
     
@@ -375,18 +367,3 @@ class Queen():
     def getcolor(self):
         return self.color
 
-        
-'''        
-if __name__ == "__main__":
-    queen = Queen("white",[0,4])
-    board=[[-2, 0, 0, 1, 2, 4, 5, 3],
-    [6, 6, 0, 6, 6, 6, 6, 6],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, -6, 0, -4, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [-6, -6, -6, 0, -6, -6, -6, -6],
-    [-3, -5, 0, -1, 0, -4, -5, -3]
-    ]
-    print(queen.get_all_moves(board))
-'''

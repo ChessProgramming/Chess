@@ -23,15 +23,7 @@ class Bishop():
             self.image = PhotoImage(file = "../../img/bB.png")
 
     
-    def is_possible(self, location, tboard):
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
-
+    def is_possible(self, location, board):
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
 
@@ -41,7 +33,7 @@ class Bishop():
             colour = -1    
     
         if( abs(xDiff) == abs(yDiff)):  #checks whether its in diagonal location 
-            if( board[location[0]][location[1]] != colour): #checks whether the location is not occupied by the own piece
+            if( board[location[0]][location[1]] * colour <=0): #checks whether the location is not occupied by the own piece
                 x = self.location[0]
                 y = self.location[1]
 
@@ -55,7 +47,7 @@ class Bishop():
                 else:
                         yinc=1
             
-                #moves in location diagonal in search of obstracle
+                #moves in location diagonal in search of obstacle
                 while(x != location[0] and y != location[1]):
                     x = x + xinc
                     y = y + yinc
@@ -69,15 +61,8 @@ class Bishop():
 
         return True
     
-    def get_all_moves(self, tboard):  
+    def get_all_moves(self, board):  
         
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
         newLocation=[]
         x=self.location[0]
         y=self.location[1]
@@ -95,9 +80,9 @@ class Bishop():
             if(board[x][y] == 0):
                 newLocation.append([x,y])
                 continue
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >=0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <=0):
                 newLocation.append([x,y])
                 break         
 
@@ -111,9 +96,9 @@ class Bishop():
             if(board[x][y] == 0):
                 newLocation.append([x,y]) 
                 continue
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >=0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <=0):
                 newLocation.append([x,y])
                 break 
 
@@ -127,9 +112,9 @@ class Bishop():
             if(board[x][y] == 0):
                 newLocation.append([x,y]) 
                 continue
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >=0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <= 0):
                 newLocation.append([x,y])
                 break 
 
@@ -143,14 +128,15 @@ class Bishop():
             if(board[x][y] == 0):
                 newLocation.append([x,y])
                 continue 
-            if(board[x][y] == colour):
+            if(board[x][y] * colour >= 0):
                 break
-            if(board[x][y] == colour*-1):
+            if(board[x][y] * colour <=0):
                 newLocation.append([x,y])
                 break 
 
         return newLocation
 
+<<<<<<< HEAD
     
     @staticmethod
     def static_get_all_moves(curr_location, board):  # @DuplicatedSignature
@@ -223,6 +209,8 @@ class Bishop():
 
         return newLocation
 
+=======
+>>>>>>> updated ischeck and successor
     
     def getimage(self):
         return self.image

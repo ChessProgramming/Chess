@@ -20,14 +20,8 @@ class Rook():
         else:
             self.image = PhotoImage(file = "../../img/bR.png")
             
-    def is_possible(self, location, tboard):
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
+    def is_possible(self, location, board):
+       
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
         if(self.color == "white"):
@@ -36,7 +30,7 @@ class Rook():
             colour = -1
 
         if((xDiff == 0 or yDiff == 0) and (not(xDiff == 0 and yDiff == 0))): #check whether its in rook move
-            if(board[location[0]][location[1]] != colour):   #check whether the location is not occupied by own piece
+            if(board[location[0]][location[1]] * colour <= 0):   #check whether the location is not occupied by own piece
                 x = self.location[0]
                 y = self.location[1]
                 xinc=0
@@ -52,14 +46,14 @@ class Rook():
                 else:
                     yinc = 1
 
-            #moves in vertical direction in search of obstracle in between
+            #moves in vertical direction in search of obstacle in between
 
                 while(xinc !=0 and x != location[0]):
                     x = x +    xinc
                     if(x != location[0]):
                         if(board[x][location[1]]!=0):
                             return False    
-            #moves in horizontal direction in search of obstracle in between
+            #moves in horizontal direction in search of obstacle in between
             
                 while(yinc !=0 and y != location[1]):
                     y = y + yinc
@@ -74,14 +68,8 @@ class Rook():
 
         return True
    
-    def get_all_moves(self, tboard):
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
+    def get_all_moves(self, board):
+       
         newLocation=[]
         x = self.location[0]
         y = self.location[1]
@@ -96,9 +84,9 @@ class Rook():
             if(board[x][self.location[1]] == 0):
                 newLocation.append([x,self.location[1]])
                 continue    
-            if(board[x][self.location[1]] == colour):
+            if(board[x][self.location[1]] * colour >= 0):
                 break
-            if(board[x][self.location[1]] == colour*-1):
+            if(board[x][self.location[1]] * colour <= 0):
                 newLocation.append([x,self.location[1]])
                 break
         
@@ -110,9 +98,9 @@ class Rook():
             if(board[x][self.location[1]] == 0):
                 newLocation.append([x,self.location[1]])
                 continue
-            if(board[x][self.location[1]] == colour):
+            if(board[x][self.location[1]] * colour >= 0):
                 break 
-            if(board[x][self.location[1]] == colour*-1):
+            if(board[x][self.location[1]] * colour <= 0):
                 newLocation.append([x,self.location[1]])
                 break
     
@@ -122,9 +110,9 @@ class Rook():
             if(board[self.location[0]][y] == 0):
                 newLocation.append([self.location[0],y])
                 continue
-            if(board[self.location[0]][y] == colour):
+            if(board[self.location[0]][y] * colour >= 0):
                 break 
-            if(board[self.location[0]][y] == colour*-1):
+            if(board[self.location[0]][y] * colour <= 0):
                 newLocation.append([self.location[0],y])
                 break
         
@@ -136,12 +124,13 @@ class Rook():
             if(board[self.location[0]][y] == 0):
                 newLocation.append([self.location[0],y])
                 continue
-            if(board[self.location[0]][y] == colour):
+            if(board[self.location[0]][y] * colour >= 0):
                 break
-            if(board[self.location[0]][y] == colour*-1):
+            if(board[self.location[0]][y] * colour <= 0) :
                 newLocation.append([self.location[0],y])
                 break
         return newLocation
+<<<<<<< HEAD
     
     @staticmethod
     def static_get_all_moves(curr_location, board):
@@ -204,6 +193,9 @@ class Rook():
     
         return newLocation
     
+=======
+    
+>>>>>>> updated ischeck and successor
     def getimage(self):
         return self.image
     

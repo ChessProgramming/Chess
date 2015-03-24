@@ -11,9 +11,13 @@ from piece.queen import Queen
 from piece.bishop import Bishop
 from piece.knight import Knight
 from piece.pawn import Pawn
+<<<<<<< HEAD
 from tkinter import Toplevel
 import sys
 from ai.alphabeta import AlphaBeta
+=======
+from piece.piecemap import PieceMap
+>>>>>>> updated ischeck and successor
 
 class Board():
     '''
@@ -106,70 +110,135 @@ class Board():
         return self.board
     
     
-    def isgameover(self, location):  
-        if(self.board[location[0]][location[1]] < 0): # when satisfied want to check whether white king is locked
+    def isgameover(self, board, colour):  
+        if(self.playercolor == "white"):
+            if(colour > 0):
+                pawn_move = -1
+            else:
+                pawn_move = 1
+        else:
+            if(colour < 0):
+                pawn_move = 1                        
+            else:
+                pawn_move = -1
+        if(colour < 0): # when satisfied want to check whether white king is locked
             for i in range(8):
                 for j in range(8):
-                    if(self.board[i][j] > 0):
-                        moves = self.cellarray[i][j].getPiece().get_all_moves(self.board)
-                        start = self.board[i][j]
+                    if(board[i][j] > 0):
+                        f = PieceMap.getFun(board[i][j])
+                        if(abs(board[i][j]) == 6):
+                            moves = f([i,j],board,pawn_move)
+                        else:
+                            moves = f([i,j],board)
+                        start = board[i][j]
                         for m in moves:
                             #changing the board and sending to if check and then again reversing the board
-                            end = self.board[m[0]][m[1]]
-                            self.board[m[0]][m[1]] = start
-                            self.board[i][j] = 0
+                            end = board[m[0]][m[1]]
+                            board[m[0]][m[1]] = start
+                            board[i][j] = 0
                             if(not self.ischeck(m)):
-                                self.board[i][j] = start
-                                self.board[m[0]][m[1]] = end
+                                board[i][j] = start
+                                board[m[0]][m[1]] = end
                                 return False
                             else:
-                                self.board[i][j] = start
-                                self.board[m[0]][m[1]] = end
+                                board[i][j] = start
+                                board[m[0]][m[1]] = end
                                 
-        elif(self.board[location[0]][location[1]] > 0): # when satisfied want to check whether black king is locked
+        elif(colour > 0): # when satisfied want to check whether black king is locked
             for i in range(8):
                 for j in range(8):
-                    if(self.board[i][j] < 0):
-                        moves = self.cellarray[i][j].getPiece().get_all_moves(self.board)
-                        start = self.board[i][j]
+                    if(board[i][j] < 0):
+                        f = PieceMap.getFun(board[i][j])
+                        if(abs(board[i][j]) == 6):
+                            moves = f([i,j],board,pawn_move)
+                        else:
+                            moves = f([i,j],board)
+                        start = board[i][j]
                         for m in moves:
                             #changing the board and sending to if check and then again reversing the board
-                            end = self.board[m[0]][m[1]]
-                            self.board[m[0]][m[1]] = start
-                            self.board[i][j] = 0
-                            if(not self.ischeck(m)):
-                                self.board[i][j] = start
-                                self.board[m[0]][m[1]] = end
+                            end = board[m[0]][m[1]]
+                            board[m[0]][m[1]] = start
+                            board[i][j] = 0
+                            if(not self.ischeck(board, m)):
+                                board[i][j] = start
+                                board[m[0]][m[1]] = end
                                 return False
                             else:
-                                self.board[i][j] = start
-                                self.board[m[0]][m[1]] = end
+                                board[i][j] = start
+                                board[m[0]][m[1]] = end
             
         return True        
             
-    
-    def ischeck(self, location):
+    def ischeck(self, board, location):
+        if(self.playercolor == "white"):
+            if(board[location[0]][location[1]] > 0):
+                pawn_move = -1
+            else:
+                pawn_move = 1
+        else:
+            if(board[location[0]][location[1]] < 0):
+                pawn_move = 1                        
+            else:
+                pawn_move = -1
         for i in range(8):
             for j in range(8):
-                if(self.board[i][j] == -1):
+                if(board[i][j] == -1):
                     bK = [i,j]
-                elif(self.board[i][j] == 1):
+                elif(board[i][j] == 1):
                     wK = [i,j]
-        if(self.board[location[0]][location[1]] < 0):   #when satisfied  want to check whether black king in danger
+        if(board[location[0]][location[1]] < 0):   #when satisfied  want to check whether black king in danger
             for i in range(8):
                 for j in range(8):
-                    if(self.board[i][j] > 0  and not (i == location[0] and j == location[1])):
-                        if(bK in self.cellarray[i][j].getPiece().get_all_moves(self.board)):
+                    if(board[i][j] > 0  and not (i == location[0] and j == location[1])):
+                        f = PieceMap.getFun(board[i][j])
+                        if(abs(board[i][j]) == 6):
+                            moves = f([i,j],board,pawn_move)
+                        else:
+                            moves = f([i,j],board)
+                        if(bK in moves):
                             return True
-        elif(self.board[location[0]][location[1]] > 0):  #when satisfied  want to check whether white king in danger
+        elif(board[location[0]][location[1]] > 0):  #when satisfied  want to check whether white king in danger
             for i in range(8):
                 for j in range(8):
-                    if(self.board[i][j] < 0 and not (i == location[0] and j == location[1])):
-                        if(wK in self.cellarray[i][j].getPiece().get_all_moves(self.board)):
+                    if(board[i][j] < 0 and not (i == location[0] and j == location[1])):
+                        f = PieceMap.getFun(board[i][j])
+                        moves = f([i,j],board)
+                        if(wK in moves):
                             return True
         return False
         
-    
+    def sucessor(self, board, colour): 
+        allmoves = []
+        if(colour > 0): 
+            for i in range(8):
+                for j in range(8):
+                    if(board[i][j] > 0):
+                        start = board[i][j]
+                        for moves in "":
+                            end = board[moves[0]][moves[1]]
+                            board[i][j] = 0
+                            board[moves[0]][moves[1]] = start
+                            if(not self.ischeck(moves)):
+                                allmoves.append(moves)
+                            board[i][j] = start
+                            board[moves[0]][moves[1]] = end
+        elif(colour < 0):
+            for i in range(8):
+                for j in range(8):
+                    if(board[i][j] < 0):
+                        start = board[i][j]
+                        for moves in "":
+                            end = board[moves[0]][moves[1]]
+                            board[i][j] = 0
+                            board[moves[0]][moves[1]] = start
+                            if(not self.ischeck(moves)):
+                                allmoves.append(moves)
+                            board[i][j] = start
+                            board[moves[0]][moves[1]] = end
+                            
+        return allmoves
+                        
+        
     def isstalemate(self):
         pass
     
@@ -201,7 +270,7 @@ class Board():
                         self.board[self.touched_location[0]][self.touched_location[1]] = start
                         self.board[location[0]][location[1]] = end
                            
-                    if(self.isgameover(location)):
+                    if(self.isgameover(self.board, self.board[location[0]][location[1]])):
                         for i in range(8):
                             for j in range(8):
                                 if(self.board[i][j] == -1):

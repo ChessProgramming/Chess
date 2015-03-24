@@ -21,14 +21,7 @@ class Knight():
         else:
             self.image = PhotoImage(file = "../../img/bN.png")
         
-    def is_possible(self, location, tboard):
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
+    def is_possible(self, location, board):
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
     
@@ -39,20 +32,13 @@ class Knight():
               
     
         if( ( abs(xDiff) == 1 and abs(yDiff) == 2 ) or ( abs(xDiff) == 2 and abs(yDiff) == 1 ) ): #check whether its knight move 
-            if(board[location[0]][location[1]] != colour): #checks whether the location is not occupied by the own piece
+            if(board[location[0]][location[1]] * colour <= 0): #checks whether the location is not occupied by the own piece
                 return True
 
         return False        
     
-    def get_all_moves(self, tboard):
+    def get_all_moves(self, board):
         lis  = [-1,-2,1,2]
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
         newLocation = []
         if(self.color == "white"):
             colour = 1
@@ -63,9 +49,10 @@ class Knight():
             for j in lis:
                 if(abs(i)!=abs(j)):
                     if(self.location[0]+i >= 0 and self.location[0]+i <= 7 and self.location[1]+j >= 0 and self.location[1]+j <= 7 ): #checks boundary condition
-                        if(board[self.location[0]+i][self.location[1]+j] != colour): #checks whether the location is not occupied by the own piece
+                        if(board[self.location[0]+i][self.location[1]+j] * colour <= 0): #checks whether the location is not occupied by the own piece
                             newLocation.append([self.location[0]+i,self.location[1]+j])
         return newLocation
+<<<<<<< HEAD
        
     @staticmethod
     def static_get_all_moves(curr_location, board):
@@ -80,6 +67,9 @@ class Knight():
                             newLocation.append([curr_location[0]+i,curr_location[1]+j])
         return newLocation
     
+=======
+   
+>>>>>>> updated ischeck and successor
     def getimage(self):
         return self.image
     

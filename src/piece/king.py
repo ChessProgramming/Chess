@@ -22,40 +22,31 @@ class King():
         else:
             self.image = PhotoImage(file = "../../img/bK.png")
         
-    def is_possible(self, location, tboard):
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
-
+    def is_possible(self, location, board):
         xDiff = self.location[0] - location[0]
         yDiff = self.location[1] - location[1]
+        
+        [print(i) for i in board]
 
         if(self.color == "white"):
             colour = 1
         else:
             colour = -1
-
-
+            
         if((xDiff == -1 or xDiff == 1 or xDiff == 0) and (yDiff == -1 or yDiff == 1 or yDiff == 0)): #checks its in adjacent cell
             if(not(xDiff == 0 and yDiff == 0 )):  #checks not in same location
+<<<<<<< HEAD
+=======
+                print("true")
+>>>>>>> updated ischeck and successor
                 if(board[location[0]][location[1]] * colour <= 0):
                     return True
+                
+        print("False")
         return False
  
-    def get_all_moves(self, tboard):
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        for i in range(8):
-            for j in range(8):
-                if(tboard[i][j] < 0):
-                    board[i][j] = -1
-                elif(tboard[i][j] > 0):
-                    board[i][j] = 1
+    def get_all_moves(self, board):
         newLocation=[]
-        
         if(self.color == "white"):
             colour = 1
         else:
@@ -67,11 +58,12 @@ class King():
                 if(not(i==0 and j==0) ):
                     if(self.location[0]+i >=0 and self.location[0]+i <=7 and \
                        self.location[1]+j >=0 and self.location[1]+j <=7):
-                        if(board[self.location[0] + i][self.location[1] + j] != colour):    #checks whether the location not occupied by own piece
+                        if(board[self.location[0] + i][self.location[1] + j] * colour <= 0): #checks whether the location not occupied by own piece
                             newLocation.append([self.location[0] + i, self.location[1] + j])   
                                      
 
         return newLocation
+<<<<<<< HEAD
     
     @staticmethod
     def static_get_all_moves(curr_location, board):  # @DuplicatedSignature
@@ -88,6 +80,9 @@ class King():
                             newLocation.append([curr_location[0]+i,curr_location[1]+j])           
         return newLocation
     
+=======
+   
+>>>>>>> updated ischeck and successor
     def getimage(self):
         return self.image
     
