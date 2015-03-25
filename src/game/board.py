@@ -230,39 +230,17 @@ class Board():
                         start = board[i][j]
                         f = PieceMap.getFun(board[i][j])
                         if(abs(board[i][j]) == 6):
-<<<<<<< HEAD
-<<<<<<< HEAD
                             moves = f([i,j],board,pawn_move)
                         else:
                             moves = f([i,j],board)
                         for move in moves:
                             end = board[move[0]][move[1]]
-=======
-                            allmoves = f([i,j],board,pawn_move)
-                        else:
-                            allmoves = f([i,j],board)
-                        for moves in allmoves:
-                            end = board[moves[0]][moves[1]]
->>>>>>> 25-03 15 sucessor update
                             board[i][j] = 0
                             board[move[0]][move[1]] = start
                             if(not self.ischeck(board, move)):
                                 allmoves.append(move)
                             board[i][j] = start
                             board[move[0]][move[1]] = end
-=======
-                            moves = f([i,j],board,pawn_move)
-                        else:
-                            moves = f([i,j],board)
-                        for m in moves:
-                            end = board[m[0]][m[1]]
-                            board[i][j] = 0
-                            board[m[0]][m[1]] = start
-                            if(not self.ischeck(board,m)):
-                                allmoves.append([[i,j],m])
-                            board[i][j] = start
-                            board[m[0]][m[1]] = end
->>>>>>> 25_3_15 _3_9
         elif(colour < 0):
             for i in range(8):
                 for j in range(8):
@@ -270,39 +248,17 @@ class Board():
                         start = board[i][j]
                         f = PieceMap.getFun(board[i][j])
                         if(abs(board[i][j]) == 6):
-<<<<<<< HEAD
-<<<<<<< HEAD
                             moves = f([i,j],board,pawn_move)
                         else:
                             moves = f([i,j],board)
                         for move in moves:
                             end = board[move[0]][move[1]]
-=======
-                            allmoves = f([i,j],board,pawn_move)
-                        else:
-                            allmoves = f([i,j],board)
-                        for moves in allmoves:
-                            end = board[moves[0]][moves[1]]
->>>>>>> 25-03 15 sucessor update
                             board[i][j] = 0
                             board[move[0]][move[1]] = start
                             if(not self.ischeck(board, move)):
                                 allmoves.append(move)
                             board[i][j] = start
                             board[move[0]][move[1]] = end
-=======
-                            moves = f([i,j],board,pawn_move)
-                        else:
-                            moves = f([i,j],board)
-                        for m in allmoves:
-                            end = board[m[0]][m[1]]
-                            board[i][j] = 0
-                            board[m[0]][m[1]] = start
-                            if(not self.ischeck(board, m)):
-                                allmoves.append([[i,j],m])
-                            board[i][j] = start
-                            board[m[0]][m[1]] = end
->>>>>>> 25_3_15 _3_9
                             
         return allmoves
                         
