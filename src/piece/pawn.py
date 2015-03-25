@@ -48,9 +48,8 @@ class Pawn():
             if(board[self.location[0] + self.move ][self.location[1]] == 0):#checks for obstacle
                 return True
             
-        if(xDiff==1 and (yDiff==-1 or yDiff ==1)):  #for taking opponent piece 
-
-            if(board[location[0]][location[1]] * colour <= 0 ):
+        if(xDiff==1 and (yDiff==-1 or yDiff ==1)):  #for taking opponent piece
+            if(board[location[0]][location[1]] * colour < 0 ):
 
                 return True
 
@@ -73,10 +72,10 @@ class Pawn():
             if(board[self.location[0] + self.move][self.location[1]] == 0): #for single forward move
                 newLocation.append([self.location[0] + self.move, self.location[1]])
             
-            if(self.location[1]-1 >= 0 and board[self.location[0] + self.move][self.location[1]-1]  *colour > 0): #for left cross move
+            if(self.location[1]-1 >= 0 and board[self.location[0] + self.move][self.location[1]-1]  *colour < 0): #for left cross move
                 newLocation.append([self.location[0] + self.move, self.location[1]-1])
              
-            if(self.location[1]+1 <= 7 and board[self.location[0] + self.move][self.location[1]+1] * colour > 0): #for right cross move
+            if(self.location[1]+1 <= 7 and board[self.location[0] + self.move][self.location[1]+1] * colour < 0): #for right cross move
                 newLocation.append([self.location[0] + self.move, self.location[1]+1])   
                 
             if(self.location[0] == start and board[self.location[0] + self.move][self.location[1]] == 0 \

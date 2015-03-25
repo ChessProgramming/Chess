@@ -39,9 +39,9 @@ class Cell(Frame):
     def getPiece(self):
         return self.piece
     
-    def changeColor(self, touched = False):
-        if(touched):
-            self.button.config(bg = "#80FF80")
+    def changeColor(self, color = None):
+        if(color != None):
+            self.button.config(bg = color)
         else:
             if(self.color == "white"):
                 self.button.config(bg = "#D3B770")      #FFD39B

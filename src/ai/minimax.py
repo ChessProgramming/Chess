@@ -24,8 +24,8 @@ class MiniMax():
             if(c or depth == 0):
                 return self.evolution(state)
     
-            children = successor(player, state)
+            children = self.b.successor(player, state)
             if(player == 1):        # max player
-                    return max([self.minmax(2, s, depth - 1) for s in children])
+                    return max([self.minmax(-1, s, depth - 1) for s in children])
             else:                   # min player
                     return min([self.minmax(1, s, depth - 1) for s in children])

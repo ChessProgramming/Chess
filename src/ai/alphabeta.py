@@ -24,10 +24,10 @@ class AlphaBeta():
             if(not c != None or depth == 0):
                 return self.evolution(state)
             
-            children = successor(player, state)
+            children = self.b.sucessor(player, state)
             if(player == 1):        # max player
                     for child in children:
-                            score = self.alpha_beta(2, child, alpha, beta, depth)
+                            score = self.alpha_beta(-1, child, alpha, beta, depth)
                             if(score >= beta):
                                     return score
                             if(score > alpha):

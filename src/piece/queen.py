@@ -175,6 +175,7 @@ class Queen():
     
         # rook moves
         #checks for the moves in down direction
+        x=self.location[0]
         while(x > 0):
             x -= 1
             if(board[x][self.location[1]] == 0):
@@ -300,6 +301,7 @@ class Queen():
     
         # rook moves
         #checks for the moves in down direction
+        x=curr_location[0]
         while(x > 0):
             x -= 1
             if(board[x][curr_location[1]] == 0):

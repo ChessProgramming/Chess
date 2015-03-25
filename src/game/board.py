@@ -16,6 +16,7 @@ from tkinter import Toplevel
 import sys
 from ai.alphabeta import AlphaBeta
 from piece.piecemap import PieceMap
+from ai.minimax import MiniMax
 
 
 class Board():
@@ -28,7 +29,7 @@ class Board():
         self.cellarray = []
         self.touched = False
         self.touched_location = []
-        self.algo = AlphaBeta(self)
+        self.algo = MiniMax(self)
     
         self.is_white_move = True
         flag = True
@@ -209,34 +210,55 @@ class Board():
                             return True
         return False
         
-    def sucessor(self, board, colour): 
+    def sucessor(self, colour, board): 
         allmoves = []
+        if(self.playercolor == "white"):
+            if(colour > 0):
+                pawn_move = -1
+            else:
+                pawn_move = 1
+        else:
+            if(colour < 0):
+                pawn_move = 1                        
+            else:
+                pawn_move = -1
+                
         if(colour > 0): 
             for i in range(8):
                 for j in range(8):
                     if(board[i][j] > 0):
                         start = board[i][j]
-                        for moves in "":
-                            end = board[moves[0]][moves[1]]
+                        f = PieceMap.getFun(board[i][j])
+                        if(abs(board[i][j]) == 6):
+                            moves = f([i,j],board,pawn_move)
+                        else:
+                            moves = f([i,j],board)
+                        for move in moves:
+                            end = board[move[0]][move[1]]
                             board[i][j] = 0
-                            board[moves[0]][moves[1]] = start
-                            if(not self.ischeck(moves)):
-                                allmoves.append(moves)
+                            board[move[0]][move[1]] = start
+                            if(not self.ischeck(board, move)):
+                                allmoves.append(move)
                             board[i][j] = start
-                            board[moves[0]][moves[1]] = end
+                            board[move[0]][move[1]] = end
         elif(colour < 0):
             for i in range(8):
                 for j in range(8):
                     if(board[i][j] < 0):
                         start = board[i][j]
-                        for moves in "":
-                            end = board[moves[0]][moves[1]]
+                        f = PieceMap.getFun(board[i][j])
+                        if(abs(board[i][j]) == 6):
+                            moves = f([i,j],board,pawn_move)
+                        else:
+                            moves = f([i,j],board)
+                        for move in moves:
+                            end = board[move[0]][move[1]]
                             board[i][j] = 0
-                            board[moves[0]][moves[1]] = start
-                            if(not self.ischeck(moves)):
-                                allmoves.append(moves)
+                            board[move[0]][move[1]] = start
+                            if(not self.ischeck(board, move)):
+                                allmoves.append(move)
                             board[i][j] = start
-                            board[moves[0]][moves[1]] = end
+                            board[move[0]][move[1]] = end
                             
         return allmoves
                         
@@ -252,11 +274,17 @@ class Board():
             if(self.isvalidtouch(location)):
                 self.touched = True
                 self.touched_location = location
-                self.cellarray[location[0]][location[1]].changeColor(self.touched)
+                self.cellarray[location[0]][location[1]].changeColor("#ADD6FF")
+                self.possible_moves = self.cellarray[location[0]][location[1]].getPiece().get_all_moves(self.board)
+                for loc in self.possible_moves:
+                    self.cellarray[loc[0]][loc[1]].changeColor("#CCFF99")  #80FF80  
         else:
             self.touched = False
             self.cellarray[self.touched_location[0]][self.touched_location[1]].changeColor()
-            piece = self.cellarray[self.touched_location[0]][self.touched_location[1]].getPiece() 
+            piece = self.cellarray[self.touched_location[0]][self.touched_location[1]].getPiece()
+            for loc in self.possible_moves:
+                self.cellarray[loc[0]][loc[1]].changeColor()
+                
             if(piece != None):
                 start = self.board[self.touched_location[0]][self.touched_location[1]]
                 end = self.board[location[0]][location[1]]
@@ -287,12 +315,20 @@ class Board():
                         if(self.ischeck(self.board, oppo)):
                             print("checkmate")
                             top = Toplevel()
-                            top.after(0, sys.exit())
+                            top.after_cancel(sys.exit(0))
                         else:
                             print("stalemate")
                             self.is_white_move = not self.is_white_move
-    
+                    
                     self.is_white_move = not self.is_white_move
+                    
+                    if(self.playercolor == "white" and not self.is_white_move):
+                        ''' computer is a black(min) player and it has to play '''
+                        children = self.sucessor(-1, self.board)
+                        print(len(children))
+                    elif(self.playercolor == "black" and self.is_white_move):
+                        ''' computer is a white(max) player and it has to play '''
+                        
                     
     def isvalidtouch(self, location):
         piece = self.cellarray[location[0]][location[1]].getPiece()
@@ -301,3 +337,4 @@ class Board():
                 return True
             if(not(piece.getcolor() == "white" or self.is_white_move)):
                 return True
+        return False
