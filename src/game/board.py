@@ -230,11 +230,19 @@ class Board():
                         start = board[i][j]
                         f = PieceMap.getFun(board[i][j])
                         if(abs(board[i][j]) == 6):
+<<<<<<< HEAD
                             moves = f([i,j],board,pawn_move)
                         else:
                             moves = f([i,j],board)
                         for move in moves:
                             end = board[move[0]][move[1]]
+=======
+                            allmoves = f([i,j],board,pawn_move)
+                        else:
+                            allmoves = f([i,j],board)
+                        for moves in allmoves:
+                            end = board[moves[0]][moves[1]]
+>>>>>>> 25-03 15 sucessor update
                             board[i][j] = 0
                             board[move[0]][move[1]] = start
                             if(not self.ischeck(board, move)):
@@ -248,11 +256,19 @@ class Board():
                         start = board[i][j]
                         f = PieceMap.getFun(board[i][j])
                         if(abs(board[i][j]) == 6):
+<<<<<<< HEAD
                             moves = f([i,j],board,pawn_move)
                         else:
                             moves = f([i,j],board)
                         for move in moves:
                             end = board[move[0]][move[1]]
+=======
+                            allmoves = f([i,j],board,pawn_move)
+                        else:
+                            allmoves = f([i,j],board)
+                        for moves in allmoves:
+                            end = board[moves[0]][moves[1]]
+>>>>>>> 25-03 15 sucessor update
                             board[i][j] = 0
                             board[move[0]][move[1]] = start
                             if(not self.ischeck(board, move)):
