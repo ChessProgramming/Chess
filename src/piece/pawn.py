@@ -109,7 +109,18 @@ class Pawn():
                 newLocation.append([curr_location[0] + 2*move, curr_location[1]])
                 
         return newLocation
-    
+         
+    @staticmethod
+    def static_get_capture_moves(curr_location, board, move):
+        newLocation = []     
+        colour = board[curr_location[0]][curr_location[1]]   
+        if(curr_location[0] + move >=0 and curr_location[0] + move <=7): # boundary condition
+            if(curr_location[1]-1 >= 0 and board[curr_location[0] + move][curr_location[1]-1] * colour < 0): #for left cross move
+                newLocation.append([curr_location[0] + move, curr_location[1]-1])
+             
+            if(curr_location[1]+1 <= 7 and board[curr_location[0] + move][curr_location[1]+1] * colour < 0): #for right cross move
+                newLocation.append([curr_location[0] + move, curr_location[1]+1])
+        return newLocation
 
     def getimage(self):
         return self.image

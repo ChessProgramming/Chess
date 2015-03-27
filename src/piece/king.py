@@ -74,7 +74,20 @@ class King():
                             newLocation.append([curr_location[0]+i,curr_location[1]+j])           
         return newLocation
     
-
+    @staticmethod
+    def static_get_capture_moves(curr_location, board):  # @DuplicatedSignature
+        newLocation=[]
+        
+        colour = board[curr_location[0]][curr_location[1]]
+        #getting all location and checking for its own piece in that
+        for i in range(-1,2):
+            for j in range(-1,2):
+                if(not(i==0 and j==0) ):
+                    if(curr_location[0]+i >=0 and curr_location[0]+i <=7 and \
+                       curr_location[1]+j >=0 and curr_location[1]+j <=7):
+                        if(board[curr_location[0]+i][curr_location[1]+j] * colour < 0 ):    #checks whether the location not occupied by own piece
+                            newLocation.append([curr_location[0]+i,curr_location[1]+j])           
+        return newLocation
     def getimage(self):
         return self.image
     

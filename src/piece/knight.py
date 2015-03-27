@@ -67,6 +67,18 @@ class Knight():
                             newLocation.append([curr_location[0]+i,curr_location[1]+j])
         return newLocation
 
+    @staticmethod
+    def static_get_capture_moves(curr_location, board):
+        lis  = [-1,-2,1,2]
+        colour = board[curr_location[0]][curr_location[1]]
+        newLocation = []      
+        for i in lis:
+            for j in lis:
+                if(abs(i)!=abs(j)):
+                    if(curr_location[0]+i >= 0 and curr_location[0]+i <= 7 and curr_location[1]+j >= 0 and curr_location[1]+j <= 7 ): #checks boundary condition
+                        if(board[curr_location[0]+i][curr_location[1]+j] * colour < 0): #checks whether the location is not occupied by the own piece
+                            newLocation.append([curr_location[0]+i,curr_location[1]+j])
+        return newLocation
     def getimage(self):
         return self.image
     

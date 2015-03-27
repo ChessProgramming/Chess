@@ -208,6 +208,70 @@ class Bishop():
                 break 
 
         return newLocation
+    @staticmethod
+    def static_get_capture_moves(curr_location, board):  # @DuplicatedSignature
+        newLocation=[]
+        x=curr_location[0]
+        y=curr_location[1]
+        
+        colour = board[curr_location[0]][curr_location[1]]
+        
+        #checks for the moves in top right diagonal
+        while(x<=6 and y<=6):
+            x=x+1
+            y=y+1
+            
+            if(board[x][y] * colour > 0):
+                break
+            if(board[x][y] * colour < 0):
+                newLocation.append([x,y])
+                break         
+
+        x=curr_location[0]
+        y=curr_location[1]
+
+        #checks for the moves in bottom left diagonal
+        while(x>=1 and y>=1):
+            x=x-1
+            y=y-1
+             
+            if(board[x][y] * colour > 0):
+                break
+            if(board[x][y] * colour < 0):
+                newLocation.append([x,y])
+                break 
+
+        x=curr_location[0]
+        y=curr_location[1]
+
+        #checks for the moves in bottom right diagonal 
+        while(x>=1 and y<=6):
+            x=x-1
+            y=y+1
+             
+            if(board[x][y] * colour > 0):
+                break
+            if(board[x][y] * colour < 0):
+                newLocation.append([x,y])
+                break 
+
+        x=curr_location[0]
+        y=curr_location[1]
+
+        #checks for the moves in top left diagonal
+        while(x<=6 and y>=1):
+            x=x+1
+            y=y-1
+             
+            if(board[x][y] * colour > 0):
+                break
+            if(board[x][y] * colour < 0):
+                newLocation.append([x,y])
+                break 
+
+        return newLocation
+    
+    
 
 
     

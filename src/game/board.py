@@ -29,7 +29,8 @@ class Board():
         self.cellarray = []
         self.touched = False
         self.touched_location = []
-        self.algo = MiniMax(self)
+        self.algo = AlphaBeta(self)
+        #self.algo = MiniMax(self)
     
         self.is_white_move = True
         flag = True
@@ -109,7 +110,40 @@ class Board():
     def getboard(self):
         return self.board
     
-    
+    def updateboard(self, board):
+        self.board = board
+        for i in range(8):
+            for j in range(8):
+                color = "white"
+                if(self.board[i][j] < 0):
+                    color = "black"
+                    
+                if(abs(self.board[i][j]) == 1):
+                    self.cellarray[i][j].setPiece(King(color, [i,j]))
+                elif(abs(self.board[i][j]) == 2):
+                    self.cellarray[i][j].setPiece(Queen(color, [i,j]))
+                elif(abs(self.board[i][j]) == 3):
+                    self.cellarray[i][j].setPiece(Rook(color, [i,j]))
+                elif(abs(self.board[i][j]) == 4):
+                    self.cellarray[i][j].setPiece(Bishop(color, [i,j]))
+                elif(abs(self.board[i][j]) == 5):
+                    self.cellarray[i][j].setPiece(Knight(color, [i,j]))
+                elif(abs(self.board[i][j]) == 6):
+                    if(self.playercolor == "white"):
+                        if(color == "white"):
+                            self.cellarray[i][j].setPiece(Pawn(color, [i,j], -1))
+                        else:
+                            self.cellarray[i][j].setPiece(Pawn(color, [i,j], 1))
+                    else:
+                        if(color == "white"):
+                            self.cellarray[i][j].setPiece(Pawn(color, [i,j], 1))
+                        else:
+                            self.cellarray[i][j].setPiece(Pawn(color, [i,j], -1))
+                            
+                elif(abs(self.board[i][j]) == 0):
+                    self.cellarray[i][j].setPiece(None)
+
+
     def isgameover(self, board, colour):  
         if(self.playercolor == "white"):
             if(colour > 0):
@@ -210,7 +244,7 @@ class Board():
                             return True
         return False
         
-    def sucessor(self, colour, board): 
+    def successor(self, colour, board): 
         allmoves = []
         if(self.playercolor == "white"):
             if(colour > 0):
@@ -228,17 +262,25 @@ class Board():
                 for j in range(8):
                     if(board[i][j] > 0):
                         start = board[i][j]
-                        f = PieceMap.getFun(board[i][j])
+                        #f = PieceMap.getFun(board[i][j])
+                        f = PieceMap.getCaptureFun(board[i][j])
                         if(abs(board[i][j]) == 6):
                             moves = f([i,j],board,pawn_move)
                         else:
                             moves = f([i,j],board)
+                        if(len(moves) <= 0):
+                            f = PieceMap.getFun(board[i][j])
+                            if(abs(board[i][j]) == 6):
+                                moves = f([i,j],board,pawn_move)
+                            else:
+                                moves = f([i,j],board)
+                                
                         for move in moves:
                             end = board[move[0]][move[1]]
                             board[i][j] = 0
                             board[move[0]][move[1]] = start
                             if(not self.ischeck(board, move)):
-                                allmoves.append(move)
+                                allmoves.append([[_i for _i in _j] for _j in board])
                             board[i][j] = start
                             board[move[0]][move[1]] = end
         elif(colour < 0):
@@ -246,17 +288,24 @@ class Board():
                 for j in range(8):
                     if(board[i][j] < 0):
                         start = board[i][j]
-                        f = PieceMap.getFun(board[i][j])
+                        #f = PieceMap.getFun(board[i][j])
+                        f = PieceMap.getCaptureFun(board[i][j])
                         if(abs(board[i][j]) == 6):
                             moves = f([i,j],board,pawn_move)
                         else:
                             moves = f([i,j],board)
+                        if(len(moves) <= 0):
+                            f = PieceMap.getFun(board[i][j])
+                            if(abs(board[i][j]) == 6):
+                                moves = f([i,j],board,pawn_move)
+                            else:
+                                moves = f([i,j],board) 
                         for move in moves:
                             end = board[move[0]][move[1]]
                             board[i][j] = 0
                             board[move[0]][move[1]] = start
                             if(not self.ischeck(board, move)):
-                                allmoves.append(move)
+                                allmoves.append([[_i for _i in _j] for _j in board])
                             board[i][j] = start
                             board[move[0]][move[1]] = end
                             
@@ -324,10 +373,17 @@ class Board():
                     
                     if(self.playercolor == "white" and not self.is_white_move):
                         ''' computer is a black(min) player and it has to play '''
-                        children = self.sucessor(-1, self.board)
-                        print(len(children))
+                        children = self.successor(-1, self.board)
+                        if(len(children) > 0):
+                            #result = min([[self.algo.minmax(1, s, 2),  s] for s in children], key=lambda y:y[0])
+                            #result = min([[self.algo.alpha_beta(1, s, -float('Inf'), float('inf'), 3),  s] for s in children], key=lambda y:y[0])
+                            result = max([[self.algo.quiescence(1, s, -float('Inf'), float('inf')),  s] for s in children], key=lambda y:y[0])
+                            self.updateboard(result[1])
+                            self.is_white_move = not self.is_white_move
+                            
                     elif(self.playercolor == "black" and self.is_white_move):
                         ''' computer is a white(max) player and it has to play '''
+                        children = self.sucessor(-1, self.board)
                         
                     
     def isvalidtouch(self, location):

@@ -43,7 +43,7 @@ class PieceMap(object):
             return color*6
         
     @staticmethod
-    def getPoints(self, number):
+    def getPoints(number):
         if(abs(number) == 1):
             return 200;
         elif(abs(number) == 2):
@@ -52,6 +52,7 @@ class PieceMap(object):
             return 5;
         elif(abs(number) == 4 or abs(number) == 5):
             return 3;
+        return 0
     
     @staticmethod   
     def getFun(number):
@@ -67,3 +68,18 @@ class PieceMap(object):
             return Knight.static_get_all_moves
         elif(abs(number) == 6):
             return Pawn.static_get_all_moves
+        
+    @staticmethod   
+    def getCaptureFun(number):
+        if(abs(number) == 1):
+            return King.static_get_capture_moves
+        elif(abs(number) == 2):
+            return Queen.static_get_capture_moves
+        elif(abs(number) == 3):
+            return Rook.static_get_capture_moves
+        elif(abs(number) == 4):
+            return Bishop.static_get_capture_moves
+        elif(abs(number) == 5):
+            return Knight.static_get_capture_moves
+        elif(abs(number) == 6):
+            return Pawn.static_get_capture_moves
