@@ -16,7 +16,6 @@ from tkinter import Toplevel
 import sys
 from ai.alphabeta import AlphaBeta
 from piece.piecemap import PieceMap
-from ai.minimax import MiniMax
 
 
 class Board():
@@ -214,12 +213,15 @@ class Board():
                 pawn_move = 1                        
             else:
                 pawn_move = -1
+        bK = wK = None
         for i in range(8):
             for j in range(8):
                 if(board[i][j] == -1):
                     bK = [i,j]
                 elif(board[i][j] == 1):
                     wK = [i,j]
+        if(bK == None or wK == None):
+            return True
         if(board[location[0]][location[1]] < 0):   #when satisfied  want to check whether black king in danger
             for i in range(8):
                 for j in range(8):
@@ -245,6 +247,71 @@ class Board():
         return False
         
     def successor(self, colour, board): 
+        allmoves = []
+        if(self.playercolor == "white"):
+            if(colour > 0):
+                pawn_move = -1
+            else:
+                pawn_move = 1
+        else:
+            if(colour < 0):
+                pawn_move = 1                        
+            else:
+                pawn_move = -1
+                
+        if(colour > 0): 
+            for i in range(8):
+                for j in range(8):
+                    if(board[i][j] > 0):
+                        start = board[i][j]
+                        f = PieceMap.getFun(board[i][j])
+                        if(abs(board[i][j]) == 6):
+                            moves = f([i,j],board,pawn_move)
+                        else:
+                            moves = f([i,j],board)
+                        if(len(moves) <= 0):
+                            f = PieceMap.getFun(board[i][j])
+                            if(abs(board[i][j]) == 6):
+                                moves = f([i,j],board,pawn_move)
+                            else:
+                                moves = f([i,j],board)
+                                
+                        for move in moves:
+                            end = board[move[0]][move[1]]
+                            board[i][j] = 0
+                            board[move[0]][move[1]] = start
+                            if(not self.ischeck(board, move)):
+                                allmoves.append([[_i for _i in _j] for _j in board])
+                            board[i][j] = start
+                            board[move[0]][move[1]] = end
+        elif(colour < 0):
+            for i in range(8):
+                for j in range(8):
+                    if(board[i][j] < 0):
+                        start = board[i][j]
+                        f = PieceMap.getFun(board[i][j])
+                        if(abs(board[i][j]) == 6):
+                            moves = f([i,j],board,pawn_move)
+                        else:
+                            moves = f([i,j],board)
+                        if(len(moves) <= 0):
+                            f = PieceMap.getFun(board[i][j])
+                            if(abs(board[i][j]) == 6):
+                                moves = f([i,j],board,pawn_move)
+                            else:
+                                moves = f([i,j],board) 
+                        for move in moves:
+                            end = board[move[0]][move[1]]
+                            board[i][j] = 0
+                            board[move[0]][move[1]] = start
+                            if(not self.ischeck(board, move)):
+                                allmoves.append([[_i for _i in _j] for _j in board])
+                            board[i][j] = start
+                            board[move[0]][move[1]] = end
+                            
+        return allmoves
+                        
+    def capture_successor(self, colour, board): 
         allmoves = []
         if(self.playercolor == "white"):
             if(colour > 0):
@@ -310,8 +377,6 @@ class Board():
                             board[move[0]][move[1]] = end
                             
         return allmoves
-                        
-        
     def isstalemate(self):
         pass
     
@@ -363,8 +428,8 @@ class Board():
                             
                         if(self.ischeck(self.board, oppo)):
                             print("checkmate")
-                            top = Toplevel()
-                            top.after_cancel(sys.exit(0))
+                            #top = Toplevel()
+                            #top.after_cancel(sys.exit(0))
                         else:
                             print("stalemate")
                             self.is_white_move = not self.is_white_move
@@ -372,17 +437,21 @@ class Board():
                     self.is_white_move = not self.is_white_move
                     
                     if(self.playercolor == "white" and not self.is_white_move):
-                        ''' computer is a black(min) player and it has to play '''
+                        # computer is a black(min) player and it has to play 
                         children = self.successor(-1, self.board)
                         if(len(children) > 0):
                             #result = min([[self.algo.minmax(1, s, 2),  s] for s in children], key=lambda y:y[0])
                             #result = min([[self.algo.alpha_beta(1, s, -float('Inf'), float('inf'), 3),  s] for s in children], key=lambda y:y[0])
-                            result = max([[self.algo.quiescence(1, s, -float('Inf'), float('inf')),  s] for s in children], key=lambda y:y[0])
+                            #result = max([[self.algo.quiescence(1, s, -float('Inf'), float('inf')),  s] for s in children], key=lambda y:y[0])
+                            #result = max([[self.algo.quiescence1(1, s, -float('Inf'), float('inf'), 10),  s] for s in children], key=lambda y:y[0])
+                            #result = max([[self.algo.mc_prune(1, s, float('inf'), 3, True, 30, 20, 5),  s] for s in children], key=lambda y:y[0])
+                            #result = max([[self.algo.negaCstar(1, s, -float('Inf'), float('inf'), 3),  s] for s in children], key=lambda y:y[0])
+                            result = max([[self.algo.negascout(1, s, -float('Inf'), float('inf'), 3, 5),  s] for s in children], key=lambda y:y[0])
                             self.updateboard(result[1])
                             self.is_white_move = not self.is_white_move
                             
                     elif(self.playercolor == "black" and self.is_white_move):
-                        ''' computer is a white(max) player and it has to play '''
+                        # computer is a white(max) player and it has to play 
                         children = self.sucessor(-1, self.board)
                         
                     
