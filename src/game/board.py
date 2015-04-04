@@ -205,14 +205,14 @@ class Board():
     def ischeck(self, board, colour):
         if(self.playercolor == "white"):
             if(colour > 0):
-                pawn_move = -1
-            else:
                 pawn_move = 1
+            else:
+                pawn_move = -1
         else:
             if(colour < 0):
-                pawn_move = 1                        
+                pawn_move = -1                        
             else:
-                pawn_move = -1
+                pawn_move = 1
         bK = wK = None
         for i in range(8):
             for j in range(8):
@@ -222,6 +222,7 @@ class Board():
                     wK = [i,j]
 
         if(bK == None or wK == None):
+            print("ennamo nadakuthu")
             return True
         
         if(colour < 0):   #when satisfied  want to check whether black king in danger
@@ -231,6 +232,8 @@ class Board():
                         f = PieceMap.getFun(board[i][j])
                         if(abs(board[i][j]) == 6):
                             moves = f([i,j],board,pawn_move)
+                            print([i,j])
+                            print(moves)
                         else:
                             moves = f([i,j],board)
                         if(bK in moves):
@@ -425,7 +428,8 @@ class Board():
                 if(piece.is_possible(location, self.board)):
                     self.board[location[0]][location[1]] = start
                     self.board[self.touched_location[0]][self.touched_location[1]] = 0
-                    
+                    [print(i) for i in self.board]
+                    print(colour)
                     if(not self.ischeck(self.board, colour)):
                         self.cellarray[location[0]][location[1]].setPiece(piece)
                         piece.setlocation(location)
