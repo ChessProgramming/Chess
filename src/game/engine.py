@@ -61,7 +61,7 @@ if __name__ == "__main__":
     
     board = Board(root)
     board.initboard(playercolor="white")
-    b= [
+    ''''b= [
                           [0, 0, 0, 0, 0, 0, 0, 0],
                           [0, 0, 0, 0, 0, 0, 0, 0],
                           [0, 0, 0, 0, 0, 0, 0, 0],
@@ -71,5 +71,5 @@ if __name__ == "__main__":
                           [0, 0, 0, 0, 0, 0, 0, -3],
                           [0, 0, 0, 1, 0, 0, 0, 0]
                          ]
-    board.updateboard(b)
+    board.updateboard(b)'''
     root.mainloop()
