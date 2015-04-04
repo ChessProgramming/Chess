@@ -51,17 +51,25 @@ class AlphaBeta():
                     bmobility += len(moves)
                     
         mobilityscore = 0.1 * (wmobility - bmobility) * player
+        
         return (materialscore + mobilityscore) * player
     
     def alpha_beta(self, player, state, alpha, beta, depth):
             c = self.b.isgameover(state, player)
-            if(not c != None or depth == 0):
+            if(c):
+                return -1*player*200+self.evolution(state, player)
+
+            if( depth == 0):
                 return self.evolution(state, player)
             
+            
             children = self.b.successor(player, state)
+            
             if(player == 1):        # max player
                     for child in children:
-                            score = self.alpha_beta(-1, child, alpha, beta, depth-1)
+                            player = -1
+                            score = self.alpha_beta(player, child, alpha, beta, depth-1)
+                            print("1 score",score)
                             if(score >= beta):
                                     return score
                             if(score > alpha):
@@ -69,7 +77,9 @@ class AlphaBeta():
                     return alpha
             else:                   # min player
                     for child in children:
-                            score = self.alpha_beta(1, child, alpha, beta, depth-1)
+                            player = 1
+                            score = self.alpha_beta(player, child, alpha, beta, depth-1)
+                            print("1 score",score)
                             if(score <= alpha):
                                     return score
                             if(score < beta):

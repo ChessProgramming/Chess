@@ -34,9 +34,7 @@ class Queen():
 
         #check rook moves
         if((xDiff == 0 or yDiff == 0) and (not(xDiff == 0 and yDiff == 0))): #check whether its in rook move
-            print("True")
             if(board[location[0]][location[1]] * colour <= 0):   #check whether the location is not occupied by own piece
-                print("True")
                 x = self.location[0]
                 y = self.location[1]
                 xinc=0

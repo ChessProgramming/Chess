@@ -169,7 +169,7 @@ class Board():
                             end = board[m[0]][m[1]]
                             board[m[0]][m[1]] = start
                             board[i][j] = 0
-                            if(not self.ischeck(board,m)):
+                            if(not self.ischeck(board,colour *-1)):
                                 board[i][j] = start
                                 board[m[0]][m[1]] = end
                                 return False
@@ -192,24 +192,24 @@ class Board():
                             end = board[m[0]][m[1]]
                             board[m[0]][m[1]] = start
                             board[i][j] = 0
-                            if(not self.ischeck(board, m)):
+                            if(not self.ischeck(board, colour * -1)):
                                 board[i][j] = start
                                 board[m[0]][m[1]] = end
                                 return False
                             else:
                                 board[i][j] = start
                                 board[m[0]][m[1]] = end
-            
+                                    
         return True        
             
-    def ischeck(self, board, location):
+    def ischeck(self, board, colour):
         if(self.playercolor == "white"):
-            if(board[location[0]][location[1]] > 0):
+            if(colour > 0):
                 pawn_move = -1
             else:
                 pawn_move = 1
         else:
-            if(board[location[0]][location[1]] < 0):
+            if(colour < 0):
                 pawn_move = 1                        
             else:
                 pawn_move = -1
@@ -220,12 +220,16 @@ class Board():
                     bK = [i,j]
                 elif(board[i][j] == 1):
                     wK = [i,j]
+<<<<<<< HEAD
         if(bK == None or wK == None):
             return True
         if(board[location[0]][location[1]] < 0):   #when satisfied  want to check whether black king in danger
+=======
+        if(colour < 0):   #when satisfied  want to check whether black king in danger
+>>>>>>> ischeck colour
             for i in range(8):
                 for j in range(8):
-                    if(board[i][j] > 0  and not (i == location[0] and j == location[1])):
+                    if(board[i][j] > 0):
                         f = PieceMap.getFun(board[i][j])
                         if(abs(board[i][j]) == 6):
                             moves = f([i,j],board,pawn_move)
@@ -233,10 +237,10 @@ class Board():
                             moves = f([i,j],board)
                         if(bK in moves):
                             return True
-        elif(board[location[0]][location[1]] > 0):  #when satisfied  want to check whether white king in danger
+        elif(colour > 0):  #when satisfied  want to check whether white king in danger
             for i in range(8):
                 for j in range(8):
-                    if(board[i][j] < 0 and not (i == location[0] and j == location[1])):
+                    if(board[i][j] < 0 ):
                         f = PieceMap.getFun(board[i][j])
                         if(abs(board[i][j]) == 6):
                             moves = f([i,j],board,pawn_move)
@@ -265,6 +269,7 @@ class Board():
                     if(board[i][j] > 0):
                         start = board[i][j]
                         f = PieceMap.getFun(board[i][j])
+<<<<<<< HEAD
                         if(abs(board[i][j]) == 6):
                             moves = f([i,j],board,pawn_move)
                         else:
@@ -331,47 +336,55 @@ class Board():
                         start = board[i][j]
                         #f = PieceMap.getFun(board[i][j])
                         f = PieceMap.getCaptureFun(board[i][j])
+=======
+                        #f = PieceMap.getCaptureFun(board[i][j])
+>>>>>>> ischeck colour
                         if(abs(board[i][j]) == 6):
                             moves = f([i,j],board,pawn_move)
                         else:
                             moves = f([i,j],board)
+                        '''
                         if(len(moves) <= 0):
                             f = PieceMap.getFun(board[i][j])
                             if(abs(board[i][j]) == 6):
                                 moves = f([i,j],board,pawn_move)
                             else:
                                 moves = f([i,j],board)
-                                
+                        '''        
                         for move in moves:
                             end = board[move[0]][move[1]]
                             board[i][j] = 0
                             board[move[0]][move[1]] = start
-                            if(not self.ischeck(board, move)):
+                            if(not self.ischeck(board, colour)):
                                 allmoves.append([[_i for _i in _j] for _j in board])
                             board[i][j] = start
                             board[move[0]][move[1]] = end
         elif(colour < 0):
+            [print(i) for i in board]
             for i in range(8):
                 for j in range(8):
                     if(board[i][j] < 0):
                         start = board[i][j]
-                        #f = PieceMap.getFun(board[i][j])
-                        f = PieceMap.getCaptureFun(board[i][j])
+                        f = PieceMap.getFun(board[i][j])
+                        #f = PieceMap.getCaptureFun(board[i][j])
                         if(abs(board[i][j]) == 6):
                             moves = f([i,j],board,pawn_move)
                         else:
                             moves = f([i,j],board)
+                        '''
                         if(len(moves) <= 0):
                             f = PieceMap.getFun(board[i][j])
                             if(abs(board[i][j]) == 6):
                                 moves = f([i,j],board,pawn_move)
                             else:
                                 moves = f([i,j],board) 
+                        '''
                         for move in moves:
+                            print(move)
                             end = board[move[0]][move[1]]
                             board[i][j] = 0
                             board[move[0]][move[1]] = start
-                            if(not self.ischeck(board, move)):
+                            if(not self.ischeck(board, colour)):
                                 allmoves.append([[_i for _i in _j] for _j in board])
                             board[i][j] = start
                             board[move[0]][move[1]] = end
@@ -384,14 +397,27 @@ class Board():
         pass
     
     def cellcallback(self, location):
+        colour = 0
+        if self.is_white_move:
+            colour = 1
+        else:
+            colour = -1
         if(self.touched == False):
             if(self.isvalidtouch(location)):
                 self.touched = True
                 self.touched_location = location
                 self.cellarray[location[0]][location[1]].changeColor("#ADD6FF")
                 self.possible_moves = self.cellarray[location[0]][location[1]].getPiece().get_all_moves(self.board)
+                start = self.board[location[0]][location[1]]
+                
                 for loc in self.possible_moves:
-                    self.cellarray[loc[0]][loc[1]].changeColor("#CCFF99")  #80FF80  
+                    end = self.board[loc[0]][loc[1]]
+                    self.board[location[0]][location[1]] = 0
+                    self.board[loc[0]][loc[1]] = start
+                    if(not self.ischeck(self.board,colour )):
+                        self.cellarray[loc[0]][loc[1]].changeColor("#CCFF99")  #80FF80  
+                    self.board[location[0]][location[1]] = start
+                    self.board[loc[0]][loc[1]] = end
         else:
             self.touched = False
             self.cellarray[self.touched_location[0]][self.touched_location[1]].changeColor()
@@ -405,28 +431,18 @@ class Board():
                 if(piece.is_possible(location, self.board)):
                     self.board[location[0]][location[1]] = start
                     self.board[self.touched_location[0]][self.touched_location[1]] = 0
-
-                    if(not self.ischeck(self.board, location)):
+                    
+                    if(not self.ischeck(self.board, colour)):
                         self.cellarray[location[0]][location[1]].setPiece(piece)
                         piece.setlocation(location)
                         self.cellarray[self.touched_location[0]][self.touched_location[1]].setPiece(None)
                     else:
                         self.board[self.touched_location[0]][self.touched_location[1]] = start
                         self.board[location[0]][location[1]] = end
+                        return 
                            
-                    if(self.isgameover(self.board, self.board[location[0]][location[1]])):
-                        for i in range(8):
-                            for j in range(8):
-                                if(self.board[i][j] == -1):
-                                    bK = [i,j]
-                                elif(self.board[i][j] == 1):
-                                    wK = [i,j]
-                        if(self.board[location[0]][location[1]] > 0):
-                            oppo = bK
-                        else:
-                            oppo = wK
-                            
-                        if(self.ischeck(self.board, oppo)):
+                    if(self.isgameover(self.board, self.board[location[0]][location[1]])):     
+                        if(self.ischeck(self.board, colour)):
                             print("checkmate")
                             #top = Toplevel()
                             #top.after_cancel(sys.exit(0))
@@ -435,24 +451,34 @@ class Board():
                             self.is_white_move = not self.is_white_move
                     
                     self.is_white_move = not self.is_white_move
-                    
                     if(self.playercolor == "white" and not self.is_white_move):
                         # computer is a black(min) player and it has to play 
                         children = self.successor(-1, self.board)
+                        print("children")
+                        '''for j in children:
+                            [print(i)for i in j]
+                            print()'''
                         if(len(children) > 0):
                             #result = min([[self.algo.minmax(1, s, 2),  s] for s in children], key=lambda y:y[0])
+<<<<<<< HEAD
                             #result = min([[self.algo.alpha_beta(1, s, -float('Inf'), float('inf'), 3),  s] for s in children], key=lambda y:y[0])
                             #result = max([[self.algo.quiescence(1, s, -float('Inf'), float('inf')),  s] for s in children], key=lambda y:y[0])
                             #result = max([[self.algo.quiescence1(1, s, -float('Inf'), float('inf'), 10),  s] for s in children], key=lambda y:y[0])
                             #result = max([[self.algo.mc_prune(1, s, float('inf'), 3, True, 30, 20, 5),  s] for s in children], key=lambda y:y[0])
                             #result = max([[self.algo.negaCstar(1, s, -float('Inf'), float('inf'), 3),  s] for s in children], key=lambda y:y[0])
                             result = max([[self.algo.negascout(1, s, -float('Inf'), float('inf'), 3, 5),  s] for s in children], key=lambda y:y[0])
+=======
+                            result = min([[self.algo.alpha_beta(1, s, -float('Inf'), float('inf'), 4),  s] for s in children], key=lambda y:y[0])
+                            #result = max([[self.algo.quiescence(1, s, -float('Inf'), float('inf')),  s] for s in children], key=lambda y:y[0])
+>>>>>>> ischeck colour
                             self.updateboard(result[1])
                             self.is_white_move = not self.is_white_move
                             
                     elif(self.playercolor == "black" and self.is_white_move):
                         # computer is a white(max) player and it has to play 
                         children = self.sucessor(-1, self.board)
+                        print("wrong")
+                    
                         
                     
     def isvalidtouch(self, location):
