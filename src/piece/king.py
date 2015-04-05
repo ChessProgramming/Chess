@@ -80,7 +80,6 @@ class King():
     @staticmethod
     def static_get_capture_moves(curr_location, board):  # @DuplicatedSignature
         newLocation=[]
-        print("curr",curr_location)
         colour = board[curr_location[0]][curr_location[1]]
         #getting all location and checking for its own piece in that
         for i in range(-1,2):

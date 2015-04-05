@@ -128,3 +128,26 @@ class MiniMax():
                         if(score < beta):
                                 beta = score
                 return beta
+            
+    def negascout(self, player, state, alpha, beta, depth, W):
+        if(depth <= 0):
+            return self.quiescence(player, state, alpha, beta)
+            
+        children = self.b.successor(player, state)
+        
+        a = alpha
+        b = beta
+        
+        i = 0
+        for child in children:
+            if(i > W):
+                break
+            t = -self.negascout(-player, child, -b, -a, depth-1, W)
+            if ( (t > a) and (t < beta) and (depth > 1) ):
+                a = -self.negascout(-player, child, -beta, -t, depth-1, W)
+            a = max(a, t)
+            if(a >= beta):
+                return a
+            b = a+1
+            i += 1
+        return a
