@@ -14,6 +14,27 @@ class Pawn():
     '''
 
 
+    piece_square_table1 = [
+                            [0,  0,  0,  0,  0,  0,  0,  0],
+                            [50, 50, 50, 50, 50, 50, 50, 50],
+                            [10, 10, 20, 30, 30, 20, 10, 10],
+                            [5,  5, 10, 25, 25, 10,  5,  5],
+                            [0,  0,  0, 20, 20,  0,  0,  0],
+                            [5, -5,-10,  0,  0,-10, -5,  5],
+                            [5, 10, 10,-20,-20, 10, 10,  5],
+                            [0,  0,  0,  0,  0,  0,  0,  0]
+                           ]
+    
+    piece_square_table2 = [
+                            [0, 0, 0, 0, 0, 0, 0, 0],
+                            [5, 10, 10, -20, -20, 10, 10, 5],
+                            [5, -5, -10, 0, 0, -10, -5, 5],
+                            [0, 0, 0, 20, 20, 0, 0, 0],
+                            [5, 5, 10, 25, 25, 10, 5, 5],
+                            [10, 10, 20, 30, 30, 20, 10, 10],
+                            [50, 50, 50, 50, 50, 50, 50, 50],
+                            [0, 0, 0, 0, 0, 0, 0, 0]
+                           ]
     def __init__(self, color, location, move):
         self.color = color
         self.location = location
@@ -122,6 +143,12 @@ class Pawn():
                 newLocation.append([curr_location[0] + move, curr_location[1]+1])
         return newLocation
 
+    @classmethod
+    def static_get_piece_score(cls, i, j, mode):
+        if(mode == 1):
+            return cls.piece_square_table1[i][j]
+        return cls.piece_square_table2[i][j]
+    
     def getimage(self):
         return self.image
     

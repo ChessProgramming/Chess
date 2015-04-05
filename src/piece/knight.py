@@ -11,7 +11,26 @@ class Knight():
         Knight is a piece which can move in L direction
     '''
 
-
+    piece_square_table1 = [
+                            [-50,-40,-30,-30,-30,-30,-40,-50],
+                            [-40,-20,  0,  0,  0,  0,-20,-40],
+                            [-30,  0, 10, 15, 15, 10,  0,-30],
+                            [-30,  5, 15, 20, 20, 15,  5,-30],
+                            [-30,  0, 15, 20, 20, 15,  0,-30],
+                            [-30,  5, 10, 15, 15, 10,  5,-30],
+                            [-40,-20,  0,  5,  5,  0,-20,-40],
+                            [-50,-40,-30,-30,-30,-30,-40,-50]
+                           ]
+    piece_square_table2 = [
+                           [-50, -40, -30, -30, -30, -30, -40, -50],
+                           [-40, -20, 0, 5, 5, 0, -20, -40],
+                           [-30, 5, 10, 15, 15, 10, 5, -30],
+                           [-30, 0, 15, 20, 20, 15, 0, -30],
+                           [-30, 5, 15, 20, 20, 15, 5, -30],
+                           [-30, 0, 10, 15, 15, 10, 0, -30],
+                           [-40, -20, 0, 0, 0, 0, -20, -40],
+                           [-50, -40, -30, -30, -30, -30, -40, -50]
+                           ]
     def __init__(self, color, location):
         self.color = color
         self.location = location
@@ -82,6 +101,11 @@ class Knight():
     def getimage(self):
         return self.image
     
+    @classmethod
+    def static_get_piece_score(cls, i, j, mode):
+        if(mode == 1):
+            return cls.piece_square_table1[i][j]
+        return cls.piece_square_table2[i][j]
     
     def setlocation(self, location):
         self.location = location

@@ -13,6 +13,27 @@ class Queen():
     '''
 
 
+    piece_square_table1 = [
+                            [-20,-10,-10, -5, -5,-10,-10,-20],
+                            [-10,  0,  0,  0,  0,  0,  0,-10],
+                            [-10,  0,  5,  5,  5,  5,  0,-10],
+                            [-5,  0,  5,  5,  5,  5,  0, -5],
+                            [0,  0,  5,  5,  5,  5,  0, -5],
+                            [-10,  5,  5,  5,  5,  5,  0,-10],
+                            [-10,  0,  5,  0,  0,  0,  0,-10],
+                            [-20,-10,-10, -5, -5,-10,-10,-20]
+                           ]
+    
+    piece_square_table2 = [
+                            [-20, -10, -10, -5, -5, -10, -10, -20],
+                            [-10, 0, 0, 0, 0, 5, 0, -10],
+                            [-10, 0, 5, 5, 5, 5, 5, -10],
+                            [-5, 0, 5, 5, 5, 5, 0, 0],
+                            [-5, 0, 5, 5, 5, 5, 0, -5],
+                            [-10, 0, 5, 5, 5, 5, 0, -10],
+                            [-10, 0, 0, 0, 0, 0, 0, -10],
+                            [-20, -10, -10, -5, -5, -10, -10, -20]
+                           ]
     def __init__(self, color, location):
         self.color = color
         self.location = location
@@ -460,6 +481,12 @@ class Queen():
                 break
     
         return newLocation
+    
+    @classmethod
+    def static_get_piece_score(cls, i, j, mode):
+        if(mode == 1):
+            return cls.piece_square_table1[i][j]
+        return cls.piece_square_table2[i][j]
 
     def getimage(self):
         return self.image

@@ -13,6 +13,26 @@ class King():
     '''
 
 
+    piece_square_table1 = [
+                            [-30,-40,-40,-50,-50,-40,-40,-30],
+                            [-30,-40,-40,-50,-50,-40,-40,-30],
+                            [-30,-40,-40,-50,-50,-40,-40,-30],
+                            [-30,-40,-40,-50,-50,-40,-40,-30],
+                            [-20,-30,-30,-40,-40,-30,-30,-20],
+                            [-10,-20,-20,-20,-20,-20,-20,-10],
+                            [20, 20,  0,  0,  0,  0, 20, 20],
+                            [20, 30, 10,  0,  0, 10, 30, 20]
+                           ]
+    piece_square_table2 = [
+                            [20, 30, 10, 0, 0, 10, 30, 20],
+                            [20, 20, 0, 0, 0, 0, 20, 20],
+                            [-10, -20, -20, -20, -20, -20, -20, -10],
+                            [-20, -30, -30, -40, -40, -30, -30, -20],
+                            [-30, -40, -40, -50, -50, -40, -40, -30],
+                            [-30, -40, -40, -50, -50, -40, -40, -30],
+                            [-30, -40, -40, -50, -50, -40, -40, -30],
+                            [-30, -40, -40, -50, -50, -40, -40, -30]
+                           ]
     def __init__(self, color, location):
         self.color = color
         self.location = location
@@ -90,6 +110,13 @@ class King():
                         if(board[curr_location[0]+i][curr_location[1]+j] * colour < 0 ):    #checks whether the location not occupied by own piece
                             newLocation.append([curr_location[0]+i,curr_location[1]+j])           
         return newLocation
+    
+    @classmethod
+    def static_get_piece_score(cls, i, j, mode):
+        if(mode == 1):
+            return cls.piece_square_table1[i][j]
+        return cls.piece_square_table2[i][j]
+    
     def getimage(self):
         return self.image
     

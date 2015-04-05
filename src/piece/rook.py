@@ -11,6 +11,27 @@ class Rook():
         Rook is a piece it can move horizontally and vertically
     '''
     
+    piece_square_table1 = [
+                            [0,  0,  0,  0,  0,  0,  0,  0],
+                            [5, 10, 10, 10, 10, 10, 10,  5],
+                            [-5,  0,  0,  0,  0,  0,  0, -5],
+                            [-5,  0,  0,  0,  0,  0,  0, -5],
+                            [-5,  0,  0,  0,  0,  0,  0, -5],
+                            [-5,  0,  0,  0,  0,  0,  0, -5],
+                            [-5,  0,  0,  0,  0,  0,  0, -5],
+                            [0,  0,  0,  5,  5,  0,  0,  0]
+                           ]
+    
+    piece_square_table2 = [
+                            [0, 0, 0, 5, 5, 0, 0, 0],
+                            [-5, 0, 0, 0, 0, 0, 0, -5],
+                            [-5, 0, 0, 0, 0, 0, 0, -5],
+                            [-5, 0, 0, 0, 0, 0, 0, -5],
+                            [-5, 0, 0, 0, 0, 0, 0, -5],
+                            [-5, 0, 0, 0, 0, 0, 0, -5],
+                            [5, 10, 10, 10, 10, 10, 10, 5],
+                            [0, 0, 0, 0, 0, 0, 0, 0]
+                           ]
     def __init__(self, color, location):
         self.color = color
         self.location = location
@@ -244,6 +265,12 @@ class Rook():
     
         return newLocation
 
+    @classmethod
+    def static_get_piece_score(cls, i, j, mode):
+        if(mode == 1):
+            return cls.piece_square_table1[i][j]
+        return cls.piece_square_table2[i][j]
+    
     def getimage(self):
         return self.image
     

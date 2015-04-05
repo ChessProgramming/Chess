@@ -53,6 +53,105 @@ class MiniMax():
         
         return (materialscore + mobilityscore) * player
     
+    def evolution2(self, board, player):
+        wmobility = bmobility = piecescore =  0
+        if(self.b.playercolor == "white"):
+            if(player > 0):
+                pawn_move = -1
+            else:
+                pawn_move = 1
+        else:
+            if(player < 0):
+                pawn_move = 1                        
+            else:
+                pawn_move = -1
+                
+                
+        MD = PA = MT = 0
+        for i in range(8):
+            for j in range(8):
+                if(board[i][j] > 0):
+                    MD += PieceMap.getPoints(board[i][j])
+                    MT += PieceMap.getPoints(board[i][j])
+                elif(board[i][j] < 0):
+                    MD -= PieceMap.getPoints(board[i][j])
+                    MT += PieceMap.getPoints(board[i][j])
+                if(board[i][j] * player < 0 and abs(board[i][j]) == 6):
+                    PA += 1
+                    
+                if(player > 0):
+                    f = PieceMap.getFun(board[i][j])
+                    moves = []
+                    if(abs(board[i][j]) == 6):
+                        moves = f([i,j],board,pawn_move)
+                    elif(abs(board[i][j] != 0)):
+                        moves = f([i,j],board)
+                    wmobility += len(moves)
+                else:
+                    f = PieceMap.getFun(board[i][j])
+                    moves = []
+                    if(abs(board[i][j]) == 6):
+                        moves = f([i,j],board,pawn_move)
+                    elif(abs(board[i][j]) != 0):
+                        moves = f([i,j],board)
+                    bmobility += len(moves)
+                    
+                if(board[i][j] * player > 0):
+                    piecescore += PieceMap.getPieceScore(board[i][j], i, j, player)
+        MD = abs(MD)
+        
+        MS = min(24000, MD) + ((MD*PA*(80000-MT))/(64000*(PA+1)))
+        materialscore = min(31000, MS)
+        mobilityscore = 0.1 * (wmobility - bmobility) * player
+        
+        return (materialscore + mobilityscore) * player
+    
+    def evolution3(self, board, player):
+        materialscore = wmobility = bmobility = piecescore = 0
+        if(self.b.playercolor == "white"):
+            if(player > 0):
+                pawn_move = -1
+            else:
+                pawn_move = 1
+        else:
+            if(player < 0):
+                pawn_move = 1                        
+            else:
+                pawn_move = -1
+                
+        for i in range(8):
+            for j in range(8):
+                if(player > 0):
+                    if(board[i][j] > 0):
+                        materialscore +=  PieceMap.getPoints(board[i][j])
+                    elif(board[i][j] < 0):
+                        materialscore -=  PieceMap.getPoints(board[i][j])
+                    f = PieceMap.getFun(board[i][j])
+                    moves = []
+                    if(abs(board[i][j]) == 6):
+                        moves = f([i,j],board,pawn_move)
+                    elif(abs(board[i][j] != 0)):
+                        moves = f([i,j],board)
+                    wmobility += len(moves)
+                else:
+                    if(board[i][j] > 0):
+                        materialscore -=  PieceMap.getPoints(board[i][j])
+                    elif(board[i][j] < 0):
+                        materialscore +=  PieceMap.getPoints(board[i][j])
+                    f = PieceMap.getFun(board[i][j])
+                    moves = []
+                    if(abs(board[i][j]) == 6):
+                        moves = f([i,j],board,pawn_move)
+                    elif(abs(board[i][j]) != 0):
+                        moves = f([i,j],board)
+                    bmobility += len(moves)
+                    
+                if(board[i][j] * player > 0):
+                    piecescore += PieceMap.getPieceScore(board[i][j], i, j, player)
+                    
+        mobilityscore = 0.1 * (wmobility - bmobility) * player
+        
+        return (materialscore + mobilityscore + piecescore) * player
     def minmax(self, player, state, depth):
             c = self.b.isgameover(state, player)
             if(c or depth == 0):
@@ -65,7 +164,7 @@ class MiniMax():
                     return min([self.minmax(1, s, depth - 1) for s in children])
 
     def quiescence(self, player, state, alpha, beta):
-        stand_pat = self.evolution(state, player) * player
+        stand_pat = self.evolution2(state, player) * player
         if(stand_pat >= beta):
             return beta
         if(alpha < stand_pat):
@@ -107,7 +206,7 @@ class MiniMax():
     
     def alpha_beta(self, player, state, alpha, beta, depth):
         if(depth <= 0):
-            return self.evolution(state, player)
+            return self.evolution2(state, player)
         
         children = self.b.capture_successor(player, state)
         
@@ -151,3 +250,32 @@ class MiniMax():
             b = a+1
             i += 1
         return a
+    
+    def mc_prune(self, player, state, beta, depth, cut, M, C, R):
+        
+        if(depth <= 0):
+            #return self.evolution(state, player)
+            return self.quiescence(player, state, beta-1, beta) * player
+        
+        children = self.b.successor(player, state)
+        if(depth >= R and cut):
+            c = 0
+            i = 0
+            for child in children:
+                if(i >= M):
+                    break
+                
+                score = -self.mc_prune(-player, child, 1-beta, depth-1-R, not cut, M, C, R)
+                if(score >= beta):
+                    c += 1
+                    if(c == C):
+                        return beta
+                i += 1
+                
+        for child in children:
+            score = -self.mc_prune(-player, child, 1-beta, depth-1, not cut, M, C, R)
+            if(score >= beta):
+                return beta
+            
+        
+        return beta-1
